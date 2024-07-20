@@ -91,7 +91,7 @@
  </ul>
     <div class="container mt-5">
         <h2>Registrar Producto</h2>
-        <form id="formCrearProducto">
+        <form id="formCrearProducto" onsubmit="guardarProducto(event)">
             <div class="mb-3">
                 <label for="codigoProducto" class="form-label">Código</label>
                 <input type="text" class="form-control" id="codigoProducto" required>
@@ -164,12 +164,14 @@
                 <label for="cantidadStockProducto" class="form-label">Cantidad en Stock</label>
                 <input type="number" class="form-control" id="cantidadStockProducto" required>
             </div>
-            <button type="button" class="btn btn-primary" onclick="guardarProducto()">Guardar Producto</button>
+            <button type="submit" class="btn btn-primary">Guardar Producto</button>
         </form>
     </div>
      
     <script>
-        function guardarProducto() {
+        function guardarProducto(event) {
+            event.preventDefault(); // Previene el envío automático del formulario
+    
             var codigo = document.getElementById('codigoProducto').value.trim();
             var nombre = document.getElementById('nombreProducto').value.trim();
             var descripcion = document.getElementById('descripcionProducto').value.trim();
@@ -179,19 +181,19 @@
             var presentacion = document.getElementById('presentacionProducto').value.trim();
             var cantidadStock = parseInt(document.getElementById('cantidadStockProducto').value);
             var isActive = true;
-
+    
             if (!codigo || !nombre || !descripcion || !categoria || isNaN(precio) || !unidadMedida || !presentacion || isNaN(cantidadStock)) {
                 alert("Por favor complete todos los campos correctamente.");
-             return;
+                return;
             }
-
+    
             var productos = JSON.parse(localStorage.getItem('Productos')) || [];
-
+    
             if (productos.some(producto => producto.codigo === codigo)) {
                 alert("Un producto con este código ya existe.");
                 return;
             }
-
+    
             var producto = {
                 codigo: codigo,
                 nombre: nombre,
@@ -204,16 +206,14 @@
                 isActive: isActive,
                 isDeleted: false  // Nuevo campo para la eliminación lógica
             };
-
+    
             productos.push(producto);
             localStorage.setItem('Productos', JSON.stringify(productos));
             alert("Producto guardado con éxito!");
             document.getElementById('formCrearProducto').reset(); // Limpiar el formulario después de guardar
         }
-
-
-
     </script>
+    
     
     <script>
         function cerrarSesion() {
