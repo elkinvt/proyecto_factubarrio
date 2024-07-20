@@ -94,7 +94,7 @@
 
     <div class="container mt-5">
         <h2>Crear Usuario de Vendedor</h2>
-         <form id="formCrearUsuario">
+        <form id="formCrearUsuario" onsubmit="guardarUsuario(event)">
             <div class="mb-3">
                 <label for="cedulaVendedor" class="form-label">Cédula del Vendedor</label>
                 <input type="text" placeholder="Ingrese cédula del vendedor y precione enter"  class="form-control" id="cedulaVendedor" required onkeypress="cargarDatosVendedor(event)">
@@ -119,7 +119,7 @@
                 <label for="contrasenaUsuario" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="contrasenaUsuario" required>
             </div>
-            <button type="button" class="btn btn-primary" onclick="guardarUsuario()">Guardar Usuario</button>
+            <button type="submit" class="btn btn-primary" onclick="guardarUsuario()">Guardar Usuario</button>
         </form>
     </div>
 
@@ -143,37 +143,43 @@
             }
             }
         }
-        function guardarUsuario() {
+    </script>
+    <script>
+        function guardarUsuario(event) {
+            event.preventDefault(); // Previene el envío automático del formulario
+    
             var nombreUsuario = document.getElementById('nombreUsuario').value.trim();
             var contrasenaUsuario = document.getElementById('contrasenaUsuario').value.trim();
             var cedula = document.getElementById('cedulaVendedor').value.trim();
-
+    
             if (!nombreUsuario || !contrasenaUsuario) {
                 alert('Por favor, ingrese un nombre de usuario y una contraseña.');
                 return; // Detener la función si los campos están vacíos
             }
-
+    
             var vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
             var vendedor = vendedores.find(v => v.cedula === cedula);
-
+    
             if (vendedor && vendedor.username) {
                 alert('Este vendedor ya tiene un usuario asignado.');
                 return; // Detiene la función si el vendedor ya tiene usuario
             }
-
+    
             if (vendedor) {
                 vendedor.username = nombreUsuario;
                 vendedor.password = contrasenaUsuario;
                 localStorage.setItem('Vendedores', JSON.stringify(vendedores));
                 alert('Usuario guardado con éxito!');
-                limpiarFormulario('formCrearUsuario'); // Llamar a limpiarFormulario después de guardar exitosamente
+                document.getElementById('formCrearUsuario').reset(); // Limpia el formulario después de guardar exitosamente
             } else {
                 alert('No se encontró un vendedor con la cédula proporcionada.');
             }
         }
-
-
     </script>
+    
+     
+
+   
     <script>
         function limpiarFormulario(idFormulario) {
             var formulario = document.getElementById(idFormulario);
