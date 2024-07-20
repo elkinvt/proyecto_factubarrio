@@ -163,14 +163,14 @@
     <script>
         function buscarYEditarVendedor() {
             var cedula = document.getElementById('buscarCedula').value;
-            if (!cedula) {
+                if (!cedula) {
                 alert("Por favor, ingrese la cédula del Vendedor antes de buscar.");
                 return; // Detiene la ejecución de la función si el campo está vacío
             }
-        
+
             var vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
-            var vendedorEncontrado = vendedores.find(v => v.cedula === cedula);
-    
+            var vendedorEncontrado = vendedores.find(v => v.cedula === cedula && !v.isDeleted);
+
             // Limpiar campos antes de setear nuevos valores o decidir ocultarlos
             document.getElementById('nombreVendedor').value = '';
             document.getElementById('apellidoVendedor').value = '';
@@ -178,8 +178,7 @@
             document.getElementById('telefonoVendedor').value = '';
             document.getElementById('direccionVendedor').value = '';
             document.getElementById('emailVendedor').value = '';
-            
-    
+
             if (vendedorEncontrado) {
                 document.getElementById('datosVendedor').classList.remove();
                 document.getElementById('nombreVendedor').value = vendedorEncontrado.nombre;
@@ -194,6 +193,7 @@
                 document.getElementById('datosVendedor');
             }
         }
+
     </script>
     
 
@@ -233,10 +233,10 @@
 
                 var confirmacion = confirm("¿Estás seguro de que deseas eliminar este vendedor? Esta acción no se puede deshacer, pero las ventas históricas se mantendrán.");
                 if (confirmacion) {
-                    // Eliminar el vendedor del array de vendedores
-                    vendedores.splice(index, 1);
+                    // Marcar el vendedor como eliminado en lugar de eliminarlo del array
+                    vendedores[index].isDeleted = true;
                     localStorage.setItem('Vendedores', JSON.stringify(vendedores));
-                    alert('Vendedor eliminado, pero su historial de ventas ha sido archivado.');
+                    alert('Vendedor marcado como eliminado, pero su historial de ventas ha sido archivado.');
                     limpiarformulario();  // Asegúrate de que esta función esté definida para limpiar el formulario después de eliminar
                     document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
                 }

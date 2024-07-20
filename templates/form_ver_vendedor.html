@@ -155,12 +155,12 @@
                 alert("Por favor, ingrese la cédula del vendedor antes de buscar.");
                 return;
             }
-            
+
             var Vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
-            var VendedorEncontrado = Vendedores.find(vendedor => vendedor.cedula === cedula);
-    
+            var VendedorEncontrado = Vendedores.find(vendedor => vendedor.cedula === cedula && !vendedor.isDeleted);
+
             var infoVendedor = document.getElementById('infoVendedor'); // Asegúrate de tener este ID en tu contenedor de formulario
-    
+
             if (VendedorEncontrado) {
                 document.getElementById('nombreVendedor').value = VendedorEncontrado.nombre;
                 document.getElementById('apellidoVendedor').value = VendedorEncontrado.apellido;
@@ -168,12 +168,13 @@
                 document.getElementById('telefonoVendedor').value = VendedorEncontrado.telefono;
                 document.getElementById('direccionVendedor').value = VendedorEncontrado.direccion;
                 document.getElementById('emailVendedor').value = VendedorEncontrado.email;
-                
+
                 infoVendedor.style.display = 'block'; // Asegúrate de que este estilo inicialmente esté en 'none'
             } else {
                 alert("No se encontró un vendedor con esa cédula.");
             }
         }
+
     </script>
     
     <script>
