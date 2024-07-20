@@ -97,7 +97,7 @@
     </ul>
   <div class="container mt-5">
     <label for="buscarCedula" class="form-label">Cédula del Cliente:</label>
-    <input type="text"  placeholder="Ingrese cédula del cliente para mostrar" class="form-control" id="buscarCedula">
+    <input type="text" placeholder="Ingrese cédula del cliente para mostrar" class="form-control" id="buscarCedula" onkeypress="handleKeyPress(event)">
     <button onclick="buscarYEditarCliente()" class="btn btn-primary mt-2">Buscar</button>
   </div>
     <div id="datosCliente" class="container mt-5 ">
@@ -152,6 +152,15 @@
             
         </form>
     </div>
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // Previene que el formulario se envíe
+                buscarYEditarCliente();  // Llama a la función que ejecuta la búsqueda
+            }
+        }
+    </script>
+    
     <script>
         function guardarCambios() {
            
@@ -257,48 +266,40 @@
     <script>
         function eliminarCliente() {
             var cedula = document.getElementById('buscarCedula').value;
-            if (!cedula) {
-                alert("Por favor ingrese la cédula del cliente que desea eliminar.");
-                return;
+                if (!cedula) {
+                    alert("Por favor ingrese la cédula del cliente que desea eliminar.");
+                    return;
+                }
+
+                var confirmacion = confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
+                if (confirmacion) {
+                    var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+                    var encontrado = false;
+
+                    var historial = JSON.parse(localStorage.getItem('historial_clientes')) || [];
+
+                    clientes = clientes.map(cliente => {
+                    if (cliente.cedula === cedula && !cliente.isDeleted) {
+                        encontrado = true;
+                        historial.push({ ...cliente, fecha_eliminacion: new Date().toISOString() });
+                        return { ...cliente, isDeleted: true }; // Marcar como eliminado en lugar de eliminar completamente
+                    }
+                        return cliente;
+                });
+
+                if (encontrado) {
+                    localStorage.setItem('clientes', JSON.stringify(clientes));
+                    localStorage.setItem('historial_clientes', JSON.stringify(historial));
+                    alert('Cliente eliminado.');
+                    limpiarformulario();
+                    document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
+                } else {
+                    alert('No se encontró un cliente activo con esa cédula.');
+                }
             }
-    
-            var confirmacion = confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
-            if (!confirmacion) {
-                return;
-            }
-    
-            var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-            var facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
-            var historialClientes = JSON.parse(localStorage.getItem('historial_clientes')) || [];
-            var clienteEncontrado = clientes.find(cliente => cliente.cedula === cedula && !cliente.isDeleted);
-    
-            if (!clienteEncontrado) {
-                alert('No se encontró un cliente activo con esa cédula.');
-                return;
-            }
-    
-            var nombreCompleto = clienteEncontrado.nombre + " " + clienteEncontrado.apellido;
-    
-            // Filtrar facturas del cliente por nombre completo
-            var facturasDelCliente = facturas.filter(factura => factura.cliente === nombreCompleto);
-    
-            // Agregar al historial de clientes antes de eliminar
-            if (facturasDelCliente.length > 0) {
-                historialClientes.push(...facturasDelCliente);
-                localStorage.setItem('historial_clientes', JSON.stringify(historialClientes));
-            }
-    
-            // Marcar el cliente como eliminado
-            clienteEncontrado.isDeleted = true;
-            localStorage.setItem('clientes', JSON.stringify(clientes));
-            alert('Cliente eliminado y su historial de compras archivado.');
-            limpiarformulario();
-            document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
         }
-    
-        
+
     </script>
-    
     <script>
         function cerrarSesion() {
             localStorage.clear();  
