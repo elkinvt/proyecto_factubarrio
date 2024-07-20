@@ -150,22 +150,23 @@
 
     <script>
         function buscarProducto() {
-            var textoBusqueda = document.getElementById('buscarProductoInput').value.trim().toLowerCase(); // Obtener el valor antes de limpiar
-            document.getElementById('buscarProductoInput').value = '';  // Limpiar el campo de búsqueda después de obtener el valor
-    
+            var textoBusqueda = document.getElementById('buscarProductoInput').value.trim().toLowerCase();
+            document.getElementById('buscarProductoInput').value = '';
+
             var productos = JSON.parse(localStorage.getItem('Productos')) || [];
-            var productosFiltrados = productos.filter(producto => 
-                producto.codigo.toLowerCase().includes(textoBusqueda) || 
-                producto.nombre.toLowerCase().includes(textoBusqueda)
+            var productosFiltrados = productos.filter(producto =>
+            (producto.codigo.toLowerCase().includes(textoBusqueda) || 
+            producto.nombre.toLowerCase().includes(textoBusqueda)) &&
+            !producto.isDeleted // Filtrar fuera los productos eliminados
             );
 
             var listaProductos = document.getElementById('listaProductos');
             listaProductos.innerHTML = '';
-            listaProductos.style.display = 'block'; // Asegúrate de mostrar la lista cada vez que buscas
+            listaProductos.style.display = 'block';
 
             if (productosFiltrados.length === 0) {
                 listaProductos.innerHTML = '<div class="list-group-item">No se encontraron productos.</div>';
-             } else {
+            } else {
                 productosFiltrados.forEach(producto => {
                     var item = document.createElement('button');
                     item.classList.add('list-group-item', 'list-group-item-action');

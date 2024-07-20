@@ -202,37 +202,36 @@
     
     <script>
 
-         var productoActual = null;  // Guarda el producto actualmente seleccionado
         function buscarProducto() {
-            // Resetea el producto actual al iniciar una búsqueda
-            productoActual = null;
+            productoActual = null; // Resetea el producto actual al iniciar una búsqueda
 
             var codigo = document.getElementById('buscarCodigoProducto').value.trim().toLowerCase();
             var nombre = document.getElementById('buscarNombreProducto').value.trim().toLowerCase();
             var productos = JSON.parse(localStorage.getItem('Productos')) || [];
 
-            var resultados = productos.filter(producto => 
-                (codigo && producto.codigo.toLowerCase().includes(codigo)) ||
-                (nombre && producto.nombre.toLowerCase().includes(nombre))
+            var resultados = productos.filter(producto =>
+                ((codigo && producto.codigo.toLowerCase().includes(codigo)) ||
+                (nombre && producto.nombre.toLowerCase().includes(nombre))) &&
+                !producto.isDeleted // Solo incluye productos que no están eliminados
             );
 
             var listaProductos = document.getElementById('listaProductos');
-                listaProductos.innerHTML = ''; // Limpiar lista anterior
+            listaProductos.innerHTML = ''; // Limpiar lista anterior
 
             if (resultados.length === 0) {
                 listaProductos.innerHTML = '<div class="list-group-item">No se encontraron productos.</div>';
             } else {
-                resultados.forEach(producto => {
+                    resultados.forEach(producto => {
                     var item = document.createElement('button');
                     item.classList.add('list-group-item', 'list-group-item-action');
                     item.textContent = `${producto.nombre} - ${producto.codigo}`;
                     item.onclick = () => cargarProductoEnFormulario(producto);
                     listaProductos.appendChild(item);
                 });
-                // Limpia los campos de búsqueda después de mostrar los resultados
-                document.getElementById('buscarCodigoProducto').value = '';
-             document.getElementById('buscarNombreProducto').value = '';
             }
+
+            document.getElementById('buscarCodigoProducto').value = '';
+            document.getElementById('buscarNombreProducto').value = '';
         }
 
         function cargarProductoEnFormulario(producto) {
@@ -324,33 +323,29 @@
     <script>
        function eliminarProducto() {
             if (productoActual) {
-            var confirmacion = confirm("¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.");
-            if (confirmacion) {
-                var productos = JSON.parse(localStorage.getItem('Productos')) || [];
-                var historialProductosEliminados = JSON.parse(localStorage.getItem('HistorialProductosEliminados')) || [];
-                var index = productos.findIndex(p => p.codigo === productoActual.codigo);
+                var confirmacion = confirm("¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.");
+                if (confirmacion) {
+                    var productos = JSON.parse(localStorage.getItem('Productos')) || [];
+                    var index = productos.findIndex(p => p.codigo === productoActual.codigo);
 
-                if (index !== -1) {
-                    // Añadir al historial antes de eliminar
-                    historialProductosEliminados.push(productos[index]);
-                    localStorage.setItem('HistorialProductosEliminados', JSON.stringify(historialProductosEliminados));
-
-                    // Eliminar el producto del arreglo principal
-                    productos.splice(index, 1);
+                    if (index !== -1) {
+                    // Marcar el producto como eliminado en lugar de eliminarlo
+                    productos[index].isDeleted = true;
                     localStorage.setItem('Productos', JSON.stringify(productos));
-                    alert('Producto eliminado y añadido al historial de eliminados.');
+                    alert('Producto marcado como eliminado.');
 
                     limpiarFormularioProducto();  // Limpia el formulario después de eliminar el producto
-                    limpiarListaProductos();
+                    limpiarListaProductos(); // Asegúrate de que esta función esté definida para actualizar la lista de productos
                     productoActual = null;  // Resetear la variable productoActual
-                } else {
+                    } else {
                     alert('Error: Producto no encontrado.');
-                }
-                }
+                 }
+            }
             } else {
                 alert('No hay ningún producto cargado para eliminar.');
             }
         }
+
 
     </script>
     <script>
