@@ -322,125 +322,124 @@
         }
     
         function validarSeleccionDeVendedor() {
-    let vendedorSeleccionado = document.getElementById('vendedorFactura').value;
-    let vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
+            let vendedorSeleccionado = document.getElementById('vendedorFactura').value;
+            let vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
     
-    // Descomponer el nombre seleccionado en nombre y apellido, asumiendo que se ha almacenado como "Nombre Apellido"
-    let partes = vendedorSeleccionado.split(" ");
-    let nombre = partes.slice(0, -1).join(" ");  // Todo excepto el último elemento
-    let apellido = partes[partes.length - 1];  // Último elemento
+            // Descomponer el nombre seleccionado en nombre y apellido, asumiendo que se ha almacenado como "Nombre Apellido"
+            let partes = vendedorSeleccionado.split(" ");
+            let nombre = partes.slice(0, -1).join(" ");  // Todo excepto el último elemento
+            let apellido = partes[partes.length - 1];  // Último elemento
 
-    // Buscar vendedor por nombre y apellido
-    let vendedor = vendedores.find(v => v.nombre === nombre && v.apellido === apellido && !v.isDeleted);
+            // Buscar vendedor por nombre y apellido
+            let vendedor = vendedores.find(v => v.nombre === nombre && v.apellido === apellido && !v.isDeleted);
 
-    if (!vendedor) {
-        alert("Por favor, seleccione un vendedor válido.");
-        return false;
-    }
-    return true;
-}
+            if (!vendedor) {
+                alert("Por favor, seleccione un vendedor válido.");
+                return false;
+            }
+            return true;
+        }
 
-function obtenerMontoPago() {
-    let montoPago = prompt("Ingrese el monto con el que va a pagar:");
-    if (!montoPago || isNaN(parseFloat(montoPago))) {
-        alert("Debe ingresar un monto válido.");
-        return null;
-    }
-    return parseFloat(montoPago);
-}
+        function obtenerMontoPago() {
+            let montoPago = prompt("Ingrese el monto con el que va a pagar:");
+                if (!montoPago || isNaN(parseFloat(montoPago))) {
+                alert("Debe ingresar un monto válido.");
+                return null;
+            }
+            return parseFloat(montoPago);
+        }
 
-function procesarPago(montoPago) {
-    let totalFactura = factura.reduce((acc, item) => acc + item.subtotal, 0);
-    if (montoPago < totalFactura) {
-        alert("El monto ingresado es insuficiente para pagar la factura.");
-        return;
-    }
+        function procesarPago(montoPago) {
+            let totalFactura = factura.reduce((acc, item) => acc + item.subtotal, 0);
+                if (montoPago < totalFactura) {
+                alert("El monto ingresado es insuficiente para pagar la factura.");
+                return;
+            }
 
-    let cambio = montoPago - totalFactura;
-    if (guardarFactura(montoPago, totalFactura, cambio)) {
-        alert(`Factura pagada con éxito! El cambio a devolver es: $${cambio.toFixed(2)}`);
-        limpiarCamposFactura();
-    }
-}
+            let cambio = montoPago - totalFactura;
+            if (guardarFactura(montoPago, totalFactura, cambio)) {
+                alert(`Factura pagada con éxito! El cambio a devolver es: $${cambio.toFixed(2)}`);
+                limpiarCamposFactura();
+            }
+        }
 
-function guardarFactura(montoPago, totalFactura, cambio) {
-    let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
-    let nuevaFactura = {
-        id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
-        fecha: new Date().toISOString().slice(0, 10),
-        hora: new Date().toTimeString().split(' ')[0],
-        cliente: document.getElementById('nombreCliente').value,
-        vendedor: document.getElementById('vendedorFactura').value,
-        items: factura,
-        total: totalFactura,
-        montoPagado: montoPago,
-        cambio: cambio
-    };
+        function guardarFactura(montoPago, totalFactura, cambio) {
+            let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+            let nuevaFactura = {
+                id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
+                fecha: new Date().toISOString().slice(0, 10),
+                hora: new Date().toTimeString().split(' ')[0],
+                cliente: document.getElementById('nombreCliente').value,
+                vendedor: document.getElementById('vendedorFactura').value,
+                items: factura,
+                total: totalFactura,
+                montoPagado: montoPago,
+                cambio: cambio
+            };
 
-    facturas.push(nuevaFactura);
-    localStorage.setItem('Facturas', JSON.stringify(facturas));
-    return true;
-}
+            facturas.push(nuevaFactura);
+            localStorage.setItem('Facturas', JSON.stringify(facturas));
+            return true;
+        }
 
-
-    
+        
         function anularFactura() {
-            if (!validarProductosEnFactura()) return;
-    
+            // Primero valida que hay productos en la factura
+            if (!validarProductosEnFactura()) {
+                alert("No hay productos en la factura para anular.");
+                return;  // Salir de la función si no hay productos para anular
+            }
+
+            // Recupera y actualiza el stock de los productos
             var productos = JSON.parse(localStorage.getItem('Productos'));
             devolverStock(productos);
+
+            // Anuncia el éxito de la operación
             alert("Factura anulada con éxito.");
+
+            // Limpia los campos para reiniciar la entrada de datos
             limpiarCamposFactura();
         }
-    
+
         function devolverStock(productos) {
             factura.forEach(item => {
-                var producto = productos.find(p => p.codigo === item.codigo && !p.isDeleted && p.isActive);
-                if (producto) {
-                    producto.cantidadStock += item.cantidad;
+            var producto = productos.find(p => p.codigo === item.codigo && !p.isDeleted && p.isActive);
+            if (producto) {
+                producto.cantidadStock += item.cantidad;  // Devuelve la cantidad al stock
                 }
             });
             localStorage.setItem('Productos', JSON.stringify(productos));
-            factura = []; // Vaciar la factura
+            factura = []; // Asegúrate de vaciar la factura después de actualizar el stock
         }
-    
-        function limpiarCamposFactura() {
-            document.getElementById('productoFactura').value = '';
-            document.getElementById('cantidadFactura').value = '';
-            document.getElementById('cedulaCliente').value = '';
-            document.getElementById('nombreCliente').value = '';
-            document.getElementById('vendedorFactura').selectedIndex = 0;
-            document.getElementById('facturaBody').innerHTML = '';
-            document.getElementById('facturaTotal').textContent = '$0';
-            factura = [];  // Reinicia el arreglo de factura
-        }
+
     </script>
     
     <script>
         function limpiarCamposFactura() {
-            // Opcional: Pregunta al usuario si está seguro de querer limpiar la factura si hay datos presentes
-            if (factura.length > 0 && !confirm("¿Está seguro de que desea limpiar la factura? Esto eliminará todos los datos no guardados.")) {
-                return; // No limpia los campos si el usuario decide no hacerlo
-            }
-    
             // Limpieza de los campos de producto
             document.getElementById('productoFactura').value = '';
             document.getElementById('cantidadFactura').value = '';
-            factura = [];  // Reinicia el arreglo de factura
-            mostrarDetallesFactura();  // Actualiza la tabla para mostrar que está vacía
-    
+            document.getElementById('cantidadFactura').disabled = false; // Asegurarse de habilitar el campo cantidad
+
             // Limpieza de los campos del cliente
             document.getElementById('cedulaCliente').value = '';
             document.getElementById('nombreCliente').value = '';
-    
+            document.getElementById('nombreCliente').disabled = false; // Habilitar nuevamente el campo de nombre del cliente
+
             // Limpieza del selector de vendedores
-            document.getElementById('vendedorFactura').selectedIndex = 0;  // Establece el selector en la posición inicial
-    
-            // Opcional: Desactiva o reactiva campos que dependen de ciertas acciones previas
-            // Ejemplo: Desactivar campos que no deben ser editados hasta que se realice una nueva selección
-            document.getElementById('nombreCliente').disabled = true;
-            document.getElementById('cantidadFactura').disabled = true;
+            document.getElementById('vendedorFactura').selectedIndex = 0;
+
+            // Limpieza de la tabla de detalles de factura
+            document.getElementById('facturaBody').innerHTML = '';
+            document.getElementById('facturaTotal').textContent = '$0';
+
+            // Reiniciar el arreglo de factura
+            factura = [];
+
+            // Actualizar la tabla para mostrar que está vacía
+            mostrarDetallesFactura();
         }
+
     </script>
     
 
@@ -516,9 +515,6 @@ function guardarFactura(montoPago, totalFactura, cambio) {
             });
         }
     </script>
-    
-    
-    
     
 </body>
 </html>
