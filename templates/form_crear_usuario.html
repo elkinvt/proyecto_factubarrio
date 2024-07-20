@@ -150,26 +150,38 @@
 
             if (!nombreUsuario || !contrasenaUsuario) {
                 alert('Por favor, ingrese un nombre de usuario y una contraseña.');
-                 return; // Detener la función si los campos de nombre de usuario y contraseña están vacíos
+                return; // Detener la función si los campos están vacíos
             }
 
             var vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
             var vendedor = vendedores.find(v => v.cedula === cedula);
 
-            // Comprobar si ya existe un usuario para este vendedor
             if (vendedor && vendedor.username) {
-            alert('Este vendedor ya tiene un usuario asignado.');
-            return; // Detiene la función si el vendedor ya tiene usuario
+                alert('Este vendedor ya tiene un usuario asignado.');
+                return; // Detiene la función si el vendedor ya tiene usuario
             }
 
-            // Asignar nombre de usuario y contraseña al vendedor
             if (vendedor) {
-            vendedor.username = nombreUsuario;
-            vendedor.password = contrasenaUsuario;
-            localStorage.setItem('Vendedores', JSON.stringify(vendedores));
-            alert('Usuario guardado con éxito!');
+                vendedor.username = nombreUsuario;
+                vendedor.password = contrasenaUsuario;
+                localStorage.setItem('Vendedores', JSON.stringify(vendedores));
+                alert('Usuario guardado con éxito!');
+                limpiarFormulario('formCrearUsuario'); // Llamar a limpiarFormulario después de guardar exitosamente
             } else {
                 alert('No se encontró un vendedor con la cédula proporcionada.');
+            }
+        }
+
+
+    </script>
+    <script>
+        function limpiarFormulario(idFormulario) {
+            var formulario = document.getElementById(idFormulario);
+            var inputs = formulario.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].type === 'text' || inputs[i].type === 'password' || inputs[i].type === 'email') {
+                    inputs[i].value = '';
+                }
             }
         }
 
