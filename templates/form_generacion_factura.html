@@ -26,6 +26,24 @@
             margin-top: -20px;  
         }
     </style>
+    <style>
+        /* Alineación y estilo para la tabla */
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    
+        /* Mejora visual para botones dentro de la tabla */
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    
+        /* Transiciones suaves para interacciones de botón */
+        .btn-danger:hover {
+            opacity: 0.85;
+        }
+    </style>
+    
 </head>
 <body>
     <div class="mx-auto" style="font-size: 100px; font-weight: bold; text-align: center; margin-top: -20px;">
@@ -117,6 +135,7 @@
                     <th>Cantidad</th>
                     <th>Precio Unitario</th>
                     <th>Subtotal</th>
+                    <th>accion</th>
                 </tr>
             </thead>
             <tbody id="facturaBody">
@@ -259,17 +278,21 @@
             document.getElementById('cantidadFactura').value = '';
         }
     
+        
+    </script>
+    <script>
         function mostrarDetallesFactura() {
             var facturaBody = document.getElementById('facturaBody');
             var facturaTotal = document.getElementById('facturaTotal');
     
             facturaBody.innerHTML = ''; // Limpia la tabla antes de agregar nuevos elementos
-            factura.forEach(item => {
+            factura.forEach((item, index) => {
                 let row = `<tr>
-                <td>${item.producto}</td>
-                <td>${item.cantidad}</td>
-                <td>$${item.precioUnitario}</td>
-                <td>$${item.subtotal}</td>
+                    <td>${item.producto}</td>
+                    <td>${item.cantidad}</td>
+                    <td>$${item.precioUnitario}</td>
+                    <td>$${item.subtotal}</td>
+                    <td><button onclick="eliminarProductoDeFactura(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
                 </tr>`;
                 facturaBody.innerHTML += row;
             });
@@ -277,7 +300,17 @@
             var total = factura.reduce((acc, item) => acc + item.subtotal, 0);
             facturaTotal.textContent = `$${total}`;
         }
+    
+        function eliminarProductoDeFactura(index) {
+            // Confirmación para evitar eliminación accidental
+            if (confirm('¿Estás seguro de que deseas eliminar este producto de la factura?')) {
+                factura.splice(index, 1); // Elimina el producto del array de factura
+                mostrarDetallesFactura(); // Actualiza la tabla de detalles de factura
+            }
+        }
     </script>
+    
+    
     
 
     <script>
