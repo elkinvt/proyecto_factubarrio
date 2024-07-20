@@ -92,7 +92,7 @@
     </ul>
     <div class="container mt-5">
         <h2>Registrar vendedor</h2>
-        <form action="/submit-Vendedor" method="post">
+        <form id="formCrearUsuario" onsubmit="guardarVendedor(event)">
             <div class="mb-3">
                 <label for="nombreVendedor" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombreVendedor" name="nombreVendedor" required>
@@ -117,13 +117,15 @@
                 <label for="emailVendedor" class="form-label">Email</label>
                 <input type="email" class="form-control" id="emailVendedor" name="emailVendedor" required>
             </div>
-            <button type="button" class="btn btn-primary" onclick="guardarVendedor()">Guardar vendedor</button>
+            <button type="submit" class="btn btn-primary" onclick="guardarVendedor()">Guardar vendedor</button>
 
         </form>
     </div>
     
     <script>
-        function guardarVendedor() {
+        function guardarVendedor(event) {
+            event.preventDefault();
+
             var nombre = document.getElementById('nombreVendedor').value;
             var apellido = document.getElementById('apellidoVendedor').value;
             var cedula = document.getElementById('cedulaVendedor').value;
