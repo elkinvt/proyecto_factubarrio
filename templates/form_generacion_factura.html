@@ -141,50 +141,57 @@
             const inputProducto = document.getElementById('productoFactura');
             inputProducto.addEventListener('input', manejarInputProducto);
         }
-    
+
         function manejarInputProducto() {
             const texto = this.value.toLowerCase();
             const productos = cargarProductos();
             const listaSugerencias = document.getElementById('listaSugerenciasProducto');
             actualizarSugerencias(texto, productos, listaSugerencias);
         }
-    
+
         function cargarProductos() {
-            return JSON.parse(localStorage.getItem('Productos')) || [];
+            const todosLosProductos = JSON.parse(localStorage.getItem('Productos')) || [];
+            // Filtra para incluir solo productos que no están eliminados y están activos
+            return todosLosProductos.filter(producto => !producto.isDeleted && producto.isActive);
         }
-    
+
         function actualizarSugerencias(texto, productos, listaSugerencias) {
             limpiarElemento(listaSugerencias);
-    
+
             if (texto.length > 0) {
                 const productosFiltrados = filtrarProductosPorTexto(productos, texto);
-                mostrarSugerencias(productosFiltrados, listaSugerencias);
+                if (productosFiltrados.length > 0) {
+                 mostrarSugerencias(productosFiltrados, listaSugerencias);
             } else {
-                ocultarElemento(listaSugerencias);
+                listaSugerencias.innerHTML = '<div class="list-group-item">No se encontraron productos.</div>';
+                ocultarElemento(listaSugerencias); // Puede optar por mostrar un mensaje en lugar de ocultar la lista
             }
+            } else {
+            ocultarElemento(listaSugerencias);
+         }
         }
-    
+
         function filtrarProductosPorTexto(productos, texto) {
             return productos.filter(producto => producto.nombre.toLowerCase().includes(texto));
         }
-    
+
         function mostrarSugerencias(productos, listaSugerencias) {
             productos.forEach(producto => {
-                const item = crearItemSugerencia(producto);
-                listaSugerencias.appendChild(item);
+            const item = crearItemSugerencia(producto);
+            listaSugerencias.appendChild(item);
             });
-            listaSugerencias.style.display = 'block';
+                listaSugerencias.style.display = 'block';
         }
-    
+
         function crearItemSugerencia(producto) {
             const item = document.createElement('div');
             item.classList.add('list-group-item', 'list-group-item-action');
             item.textContent = `${producto.nombre} - Precio: ${producto.precio}`;
             item.style.cursor = 'pointer';
             item.onclick = () => seleccionarProducto(producto);
-            return item;
+        return item;
         }
-    
+
         function seleccionarProducto(producto) {
             const inputProducto = document.getElementById('productoFactura');
             const listaSugerencias = document.getElementById('listaSugerenciasProducto');
@@ -193,62 +200,69 @@
             limpiarElemento(listaSugerencias);
             ocultarElemento(listaSugerencias);
         }
-    
+
         function limpiarElemento(elemento) {
             elemento.innerHTML = '';
         }
-    
+
         function ocultarElemento(elemento) {
-            elemento.style.display = 'none';
+             elemento.style.display = 'none';
         }
-    
+
         document.addEventListener('DOMContentLoaded', cargarProductosParaFactura);
+
     </script>
     
 
     <script>
         var factura = [];
-
+    
         function agregarProductoAFactura() {
             var codigo = document.getElementById('productoFacturaCodigo').value;
             var cantidad = parseInt(document.getElementById('cantidadFactura').value);
             var productos = JSON.parse(localStorage.getItem('Productos'));
-            var producto = productos.find(p => p.codigo === codigo);
-
-            if (!producto.isActive) { 
-                alert("Este producto está deshabilitado.");
-             return;
-            }
-
-            if (!producto || cantidad > producto.cantidadStock) {
-                alert("No hay suficiente stock del producto o el producto no existe.");
+            var producto = productos.find(p => p.codigo === codigo && !p.isDeleted);
+    
+            if (!producto) {
+                alert("El producto no existe o ha sido eliminado.");
                 return;
             }
-
+    
+            if (!producto.isActive) { 
+                alert("Este producto está deshabilitado.");
+                return;
+            }
+    
+            if (cantidad > producto.cantidadStock) {
+                alert("No hay suficiente stock del producto.");
+                return;
+            }
+    
             // Reservar stock
             producto.cantidadStock -= cantidad;
             var subtotal = producto.precio * cantidad;
             factura.push({
-            codigo: producto.codigo,
-            producto: producto.nombre,
-            cantidad: cantidad,
-            precioUnitario: producto.precio,
-            subtotal: subtotal
+                codigo: producto.codigo,
+                producto: producto.nombre,
+                cantidad: cantidad,
+                precioUnitario: producto.precio,
+                subtotal: subtotal
             });
-
+    
             // Guardar los cambios en localStorage
             localStorage.setItem('Productos', JSON.stringify(productos));
-
+    
             mostrarDetallesFactura();
-
-            document.getElementById('productoFactura').value = ''; // Suponiendo que tienes un campo para el nombre del producto
-            document.getElementById('cantidadFactura').value = ''; // Limpiar la cantidad
+    
+            // Limpiar los campos de entrada después de añadir el producto
+            document.getElementById('productoFactura').value = '';
+            document.getElementById('cantidadFactura').value = '';
         }
-
+    
         function mostrarDetallesFactura() {
             var facturaBody = document.getElementById('facturaBody');
             var facturaTotal = document.getElementById('facturaTotal');
-
+    
             facturaBody.innerHTML = ''; // Limpia la tabla antes de agregar nuevos elementos
             factura.forEach(item => {
                 let row = `<tr>
@@ -259,135 +273,181 @@
                 </tr>`;
                 facturaBody.innerHTML += row;
             });
-
+    
             var total = factura.reduce((acc, item) => acc + item.subtotal, 0);
             facturaTotal.textContent = `$${total}`;
         }
     </script>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        cargarProductosParaFactura();
-        // Asegúrate de que todos los elementos están inicializados correctamente.
+            cargarProductosParaFactura();
+            cargarClientes();  // Ejemplo de cargar clientes
+            cargarVendedores();  // Ejemplo de cargar vendedores
+            inicializarUI();  // Ejemplo de una función que configura elementos de la interfaz de usuario
         });
     </script>
+    
 
     <script>
-        // Funciones para manejar la lógica de la factura
+        var factura = [];
+    
         function pagarFactura() {
             if (!validarProductosEnFactura()) return;
             if (!validarSeleccionDeVendedor()) return;
-
+    
             let montoPago = obtenerMontoPago();
             if (montoPago === null) return;
-
+    
             procesarPago(montoPago);
         }
-
+    
         function validarProductosEnFactura() {
             if (factura.length === 0) {
                 alert("No hay productos en la factura para pagar.");
                 return false;
             }
-             return true;
-        }
-
-        function validarSeleccionDeVendedor() {
-            let vendedorSeleccionado = document.getElementById('vendedorFactura').value;
-            if (!vendedorSeleccionado) {
-                alert("Por favor, seleccione un vendedor.");
+            let productos = JSON.parse(localStorage.getItem('Productos')) || [];
+            let todosProductosValidos = factura.every(item => {
+                let producto = productos.find(p => p.codigo === item.codigo);
+                return producto && !producto.isDeleted && producto.isActive;
+            });
+    
+            if (!todosProductosValidos) {
+                alert("Algunos productos en la factura ya no están disponibles o han sido eliminados.");
                 return false;
             }
             return true;
         }
+    
+        function validarSeleccionDeVendedor() {
+    let vendedorSeleccionado = document.getElementById('vendedorFactura').value;
+    let vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
+    
+    // Descomponer el nombre seleccionado en nombre y apellido, asumiendo que se ha almacenado como "Nombre Apellido"
+    let partes = vendedorSeleccionado.split(" ");
+    let nombre = partes.slice(0, -1).join(" ");  // Todo excepto el último elemento
+    let apellido = partes[partes.length - 1];  // Último elemento
 
-        function obtenerMontoPago() {
-            let montoPago = prompt("Ingrese el monto con el que va a pagar:");
-            if (!montoPago) return null;
+    // Buscar vendedor por nombre y apellido
+    let vendedor = vendedores.find(v => v.nombre === nombre && v.apellido === apellido && !v.isDeleted);
 
-            return parseFloat(montoPago);
-        }
+    if (!vendedor) {
+        alert("Por favor, seleccione un vendedor válido.");
+        return false;
+    }
+    return true;
+}
 
-        function procesarPago(montoPago) {
-            let totalFactura = factura.reduce((acc, item) => acc + item.subtotal, 0);
-            if (isNaN(montoPago) || montoPago < totalFactura) {
-                alert("El monto ingresado no es válido o es insuficiente para pagar la factura.");
-                return;
-            }
+function obtenerMontoPago() {
+    let montoPago = prompt("Ingrese el monto con el que va a pagar:");
+    if (!montoPago || isNaN(parseFloat(montoPago))) {
+        alert("Debe ingresar un monto válido.");
+        return null;
+    }
+    return parseFloat(montoPago);
+}
 
-            let cambio = montoPago - totalFactura;
-            guardarFactura(montoPago, totalFactura, cambio);
-            alert(`Factura pagada con éxito! El cambio a devolver es: $${cambio.toFixed(2)}`);
-            limpiarCamposFactura();
-        }
+function procesarPago(montoPago) {
+    let totalFactura = factura.reduce((acc, item) => acc + item.subtotal, 0);
+    if (montoPago < totalFactura) {
+        alert("El monto ingresado es insuficiente para pagar la factura.");
+        return;
+    }
 
-        function guardarFactura(montoPago, totalFactura, cambio) {
-            let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
-            let nuevaFactura = {
-                id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
-                fecha: new Date().toISOString().slice(0, 10),
-                hora: new Date().toTimeString().split(' ')[0],
-                cliente: document.getElementById('nombreCliente').value,
-                vendedor: document.getElementById('vendedorFactura').value,
-                items: factura,
-                total: totalFactura,
-                montoPagado: montoPago,
-                cambio: cambio
-            };
+    let cambio = montoPago - totalFactura;
+    if (guardarFactura(montoPago, totalFactura, cambio)) {
+        alert(`Factura pagada con éxito! El cambio a devolver es: $${cambio.toFixed(2)}`);
+        limpiarCamposFactura();
+    }
+}
 
-            facturas.push(nuevaFactura);
-            localStorage.setItem('Facturas', JSON.stringify(facturas));
-        }
+function guardarFactura(montoPago, totalFactura, cambio) {
+    let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+    let nuevaFactura = {
+        id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
+        fecha: new Date().toISOString().slice(0, 10),
+        hora: new Date().toTimeString().split(' ')[0],
+        cliente: document.getElementById('nombreCliente').value,
+        vendedor: document.getElementById('vendedorFactura').value,
+        items: factura,
+        total: totalFactura,
+        montoPagado: montoPago,
+        cambio: cambio
+    };
 
+    facturas.push(nuevaFactura);
+    localStorage.setItem('Facturas', JSON.stringify(facturas));
+    return true;
+}
+
+
+    
         function anularFactura() {
             if (!validarProductosEnFactura()) return;
-
+    
             var productos = JSON.parse(localStorage.getItem('Productos'));
             devolverStock(productos);
             alert("Factura anulada con éxito.");
             limpiarCamposFactura();
         }
-
+    
         function devolverStock(productos) {
             factura.forEach(item => {
-                var producto = productos.find(p => p.codigo === item.codigo);
+                var producto = productos.find(p => p.codigo === item.codigo && !p.isDeleted && p.isActive);
                 if (producto) {
-                producto.cantidadStock += item.cantidad;
+                    producto.cantidadStock += item.cantidad;
                 }
             });
             localStorage.setItem('Productos', JSON.stringify(productos));
             factura = []; // Vaciar la factura
         }
-
+    
         function limpiarCamposFactura() {
-            // Limpiar todos los campos relacionados con la factura
-            // Implementar según la estructura de tu formulario
+            document.getElementById('productoFactura').value = '';
+            document.getElementById('cantidadFactura').value = '';
+            document.getElementById('cedulaCliente').value = '';
+            document.getElementById('nombreCliente').value = '';
+            document.getElementById('vendedorFactura').selectedIndex = 0;
+            document.getElementById('facturaBody').innerHTML = '';
+            document.getElementById('facturaTotal').textContent = '$0';
+            factura = [];  // Reinicia el arreglo de factura
         }
-
     </script>
-
+    
     <script>
         function limpiarCamposFactura() {
+            // Opcional: Pregunta al usuario si está seguro de querer limpiar la factura si hay datos presentes
+            if (factura.length > 0 && !confirm("¿Está seguro de que desea limpiar la factura? Esto eliminará todos los datos no guardados.")) {
+                return; // No limpia los campos si el usuario decide no hacerlo
+            }
+    
             // Limpieza de los campos de producto
             document.getElementById('productoFactura').value = '';
             document.getElementById('cantidadFactura').value = '';
             factura = [];  // Reinicia el arreglo de factura
             mostrarDetallesFactura();  // Actualiza la tabla para mostrar que está vacía
-
+    
             // Limpieza de los campos del cliente
             document.getElementById('cedulaCliente').value = '';
             document.getElementById('nombreCliente').value = '';
-
+    
             // Limpieza del selector de vendedores
             document.getElementById('vendedorFactura').selectedIndex = 0;  // Establece el selector en la posición inicial
+    
+            // Opcional: Desactiva o reactiva campos que dependen de ciertas acciones previas
+            // Ejemplo: Desactivar campos que no deben ser editados hasta que se realice una nueva selección
+            document.getElementById('nombreCliente').disabled = true;
+            document.getElementById('cantidadFactura').disabled = true;
         }
-
     </script>
+    
 
     <script>
         // Event listener para manejar el ingreso de cédula
         document.getElementById('cedulaCliente').addEventListener('keypress', manejarTeclaPresionada);
-
+    
         function manejarTeclaPresionada(event) {
             // Actuar solo cuando se presione Enter
             if (event.key === 'Enter') {
@@ -395,23 +455,24 @@
                 buscarClientePorCedula();
             }
         }
-
+    
         function buscarClientePorCedula() {
             let cedulaIngresada = document.getElementById('cedulaCliente').value.trim();
             let clientes = cargarClientes();
             let clienteEncontrado = encontrarCliente(clientes, cedulaIngresada);
-
             actualizarCampoNombre(clienteEncontrado);
         }
-
+    
         function cargarClientes() {
-            return JSON.parse(localStorage.getItem('clientes')) || []; // Asegúrate de usar 'clientes' en minúsculas
+            const todosLosClientes = JSON.parse(localStorage.getItem('clientes')) || [];
+            // Filtra para incluir sólo clientes que no están eliminados y están activos
+            return todosLosClientes.filter(cliente => !cliente.isDeleted && cliente.isActive);
         }
-
+    
         function encontrarCliente(clientes, cedula) {
             return clientes.find(cliente => cliente.cedula === cedula);
         }
-
+    
         function actualizarCampoNombre(clienteEncontrado) {
             let campoNombre = document.getElementById('nombreCliente');
             if (clienteEncontrado) {
@@ -420,32 +481,44 @@
             } else {
                 // Limpiar el campo nombre si no se encuentra la cédula
                 campoNombre.value = '';
-                alert('Cliente no encontrado');
+                alert('Cliente no encontrado o no está activo');
             }
         }
     </script>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-        cargarVendedores();
+            cargarVendedores();
         });
-
+    
         function cargarVendedores() {
             let vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
+            console.log("Vendedores cargados:", vendedores); // Depuración: Ver los vendedores cargados
+    
+            // Filtra vendedores para incluir solo aquellos que no están eliminados
+            vendedores = vendedores.filter(vendedor => !vendedor.isDeleted);
+            console.log("Vendedores filtrados (no eliminados):", vendedores); // Depuración: Ver los vendedores filtrados
+    
             let selectorVendedor = document.getElementById('vendedorFactura');
             selectorVendedor.innerHTML = '<option value="">Seleccione un vendedor</option>'; // Opción predeterminada
-
+    
+            if (vendedores.length === 0) {
+                console.log("No hay vendedores disponibles para mostrar."); // Depuración: Indicar si no hay vendedores para mostrar
+            }
+    
             vendedores.forEach(vendedor => {
                 let opcion = document.createElement('option');
-                // Combinamos el nombre y apellido para mostrarlo y usarlo como valor
+                // Cambio para usar nombre y apellido como valor, que será utilizado en la factura
                 opcion.value = vendedor.nombre + " " + vendedor.apellido;
                 opcion.textContent = vendedor.nombre + " " + vendedor.apellido;
                 selectorVendedor.appendChild(opcion);
             });
         }
-
-        document.addEventListener('DOMContentLoaded', cargarVendedores);
-
     </script>
+    
+    
+    
+    
 </body>
 </html>
