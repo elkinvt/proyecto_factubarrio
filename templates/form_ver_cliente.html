@@ -142,13 +142,14 @@
     <script>
        function buscarCliente() {
             var cedula = document.getElementById('cedulaBuscar').value.trim();
-                if (!cedula) {
+            if (!cedula) {
                 alert("Por favor, ingrese la cédula del Cliente antes de buscar.");
                 return;
             }
 
             var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-            var clienteEncontrado = clientes.find(cliente => cliente.cedula === cedula);
+            // Asegúrate de que solo busques clientes no eliminados
+            var clienteEncontrado = clientes.find(cliente => cliente.cedula === cedula && !cliente.isDeleted);
 
             if (clienteEncontrado) {
                 // Actualizar campos de texto
@@ -164,6 +165,7 @@
                 limpiarCampos();  // Limpia los campos si no se encuentra el cliente
             }
         }
+
 
 
         function limpiarCampos() {

@@ -172,12 +172,13 @@
             var cedula = document.getElementById('buscarCedula').value;
 
             if (!cedula) {  // Verifica si el campo 'cedulaBuscar' está vacío
-            alert("Por favor, ingrese la cédula del Cliente antes de buscar.");
-            return;  // Detiene la ejecución de la función si el campo está vacío
+                alert("Por favor, ingrese la cédula del Cliente antes de buscar.");
+                return;  // Detiene la ejecución de la función si el campo está vacío
             }
             var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-            var cliente = clientes.find(cliente => cliente.cedula === cedula);
-    
+            // Modifica aquí para incluir clientes inactivos pero no eliminados
+            var cliente = clientes.find(cliente => cliente.cedula === cedula && !cliente.isDeleted);
+
             if (cliente) {
                 document.getElementById('datosCliente').classList.remove('hidden');
                 document.getElementById('nombreCliente').value = cliente.nombre;
@@ -186,14 +187,14 @@
                 document.getElementById('telefonoCliente').value = cliente.telefono;
                 document.getElementById('direccionCliente').value = cliente.direccion;
                 document.getElementById('emailCliente').value = cliente.email;
-                document.getElementById('estadoCliente').value = cliente.isActive ? "Activo" : "Inactivo";
-                document.getElementById('datosCliente').style.display = 'block';
+                document.getElementById('estadoCliente').value = cliente.isActive ? "Activo" : "Inactivo"; // Muestra el estado actual del cliente
+                document.getElementById('datosCliente').style.display = 'block'; // Asegúrate de que este elemento exista y esté configurado para mostrar/ocultar correctamente
             } else {
                 alert('Cliente no encontrado');
-                document.getElementById('datosCliente');
                 document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
             }
         }
+
     
         function guardarCambios() {
             var cedula = document.getElementById('buscarCedula').value;
@@ -256,26 +257,39 @@
     <script>
         function eliminarCliente() {
             var cedula = document.getElementById('buscarCedula').value;
-            if (!cedula) {
-                alert("Por favor ingrese la cédula del cliente que desea eliminar.");
-                return;
-            }
-    
-            var confirmacion = confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
-            if (confirmacion) {
-                var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-                var nuevosClientes = clientes.filter(cliente => cliente.cedula !== cedula);
-    
-                if (clientes.length !== nuevosClientes.length) {
-                    localStorage.setItem('clientes', JSON.stringify(nuevosClientes));
+                if (!cedula) {
+                    alert("Por favor ingrese la cédula del cliente que desea eliminar.");
+                    return;
+                }
+
+                var confirmacion = confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
+                if (confirmacion) {
+                    var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+                    var encontrado = false;
+
+                    var historial = JSON.parse(localStorage.getItem('historial_clientes')) || [];
+
+                    clientes = clientes.map(cliente => {
+                    if (cliente.cedula === cedula && !cliente.isDeleted) {
+                        encontrado = true;
+                        historial.push({ ...cliente, fecha_eliminacion: new Date().toISOString() });
+                        return { ...cliente, isDeleted: true }; // Marcar como eliminado en lugar de eliminar completamente
+                    }
+                        return cliente;
+                });
+
+                if (encontrado) {
+                    localStorage.setItem('clientes', JSON.stringify(clientes));
+                    localStorage.setItem('historial_clientes', JSON.stringify(historial));
                     alert('Cliente eliminado.');
-                    limpiarformulario();  // Limpia los campos después de eliminar el cliente
+                    limpiarformulario();
                     document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
                 } else {
-                    alert('No se encontró un cliente con esa cédula.');
+                    alert('No se encontró un cliente activo con esa cédula.');
                 }
             }
         }
+
     </script>
     <script>
         function cerrarSesion() {

@@ -153,8 +153,10 @@
             telefono: telefono,
             direccion: direccion,
             email: email,
-            isActive: isActive
+            isActive: isActive,
+            isDeleted: false  // Nuevo campo para manejar la eliminación lógica
         };
+
 
         clientes.push(cliente);
         localStorage.setItem('clientes', JSON.stringify(clientes));
