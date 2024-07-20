@@ -364,23 +364,26 @@
         }
 
         function guardarFactura(montoPago, totalFactura, cambio) {
-            let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
-            let nuevaFactura = {
-                id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
-                fecha: new Date().toISOString().slice(0, 10),
-                hora: new Date().toTimeString().split(' ')[0],
-                cliente: document.getElementById('nombreCliente').value,
-                vendedor: document.getElementById('vendedorFactura').value,
-                items: factura,
-                total: totalFactura,
-                montoPagado: montoPago,
-                cambio: cambio
-            };
+    let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+    let selectorVendedor = document.getElementById('vendedorFactura');
+    let nombreVendedor = selectorVendedor.options[selectorVendedor.selectedIndex].text;  // Obtiene el texto del vendedor seleccionado, que debería ser el nombre completo
 
-            facturas.push(nuevaFactura);
-            localStorage.setItem('Facturas', JSON.stringify(facturas));
-            return true;
-        }
+    let nuevaFactura = {
+        id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
+        fecha: new Date().toISOString().slice(0, 10),
+        hora: new Date().toTimeString().split(' ')[0],
+        cliente: document.getElementById('nombreCliente').value,
+        vendedor: nombreVendedor,  // Guardar el nombre completo del vendedor obtenido del selector
+        items: factura,
+        total: totalFactura,
+        montoPagado: montoPago,
+        cambio: cambio
+    };
+
+    facturas.push(nuevaFactura);
+    localStorage.setItem('Facturas', JSON.stringify(facturas));
+    return true;
+}
 
         
         function anularFactura() {

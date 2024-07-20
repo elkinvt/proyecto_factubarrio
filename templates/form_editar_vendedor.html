@@ -226,41 +226,41 @@
             var cedula = document.getElementById('cedulaVendedor').value;
             var vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
             var index = vendedores.findIndex(v => v.cedula === cedula);
-
+    
             if (index !== -1) {
-                // Suponiendo que la cédula se use como ID del vendedor en las ventas
-                archivarVentasVendedor(cedula);
-
+                var nombreCompleto = vendedores[index].nombre + " " + vendedores[index].apellido;
+    
+                archivarVentasVendedor(nombreCompleto);
+    
                 var confirmacion = confirm("¿Estás seguro de que deseas eliminar este vendedor? Esta acción no se puede deshacer, pero las ventas históricas se mantendrán.");
                 if (confirmacion) {
-                    // Marcar el vendedor como eliminado en lugar de eliminarlo del array
                     vendedores[index].isDeleted = true;
                     localStorage.setItem('Vendedores', JSON.stringify(vendedores));
                     alert('Vendedor marcado como eliminado, pero su historial de ventas ha sido archivado.');
-                    limpiarformulario();  // Asegúrate de que esta función esté definida para limpiar el formulario después de eliminar
-                    document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
+                    limpiarformulario();
+                    document.getElementById('buscarCedula').value = '';
                 }
             } else {
                 alert('Vendedor no encontrado.');
             }
         }
+    
+        function archivarVentasVendedor(nombreVendedor) {
+    var facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+    var historialVentas = JSON.parse(localStorage.getItem('HistorialVentas')) || [];
 
-        // Función que archiva las ventas antes de eliminar el vendedor
-        function archivarVentasVendedor(cedulaVendedor) {
-            var ventas = JSON.parse(localStorage.getItem('Ventas')) || [];
-            var historialVentas = JSON.parse(localStorage.getItem('HistorialVentas')) || [];
-    
-            // Filtrar las ventas que corresponden al vendedor
-            var ventasDelVendedor = ventas.filter(venta => venta.idVendedor === cedulaVendedor);
-    
-            // Agregar estas ventas al historial
-            historialVentas.push(...ventasDelVendedor);
-            localStorage.setItem('HistorialVentas', JSON.stringify(historialVentas));
-    
-            // Remover las ventas del array original
-            var ventasActualizadas = ventas.filter(venta => venta.idVendedor !== cedulaVendedor);
-            localStorage.setItem('Ventas', JSON.stringify(ventasActualizadas));
-        }
+    var ventasDelVendedor = facturas.filter(factura => factura.vendedor === nombreVendedor);
+
+    if (ventasDelVendedor.length > 0) {
+        historialVentas.push(...ventasDelVendedor);
+        localStorage.setItem('HistorialVentas', JSON.stringify(historialVentas));
+
+        var facturasActualizadas = facturas.filter(factura => factura.vendedor !== nombreVendedor);
+        localStorage.setItem('Facturas', JSON.stringify(facturasActualizadas));
+    } else {
+        alert("No se encontraron ventas para este vendedor.");
+    }
+}
 
     
         function limpiarformulario() {
@@ -272,6 +272,9 @@
             document.getElementById('emailVendedor').value = '';
         }
     </script>
+    
+    
+    
     
     <script>
         function cerrarSesion() {
