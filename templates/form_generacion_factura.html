@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>factubarrio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-image: url('../imagenes/logo.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 5px; 
+        }
+        
+        .mx-auto {
+            font-size: 100px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: -20px;  
+        }
+    </style>
+</head>
+<body>
+    <div class="mx-auto" style="font-size: 100px; font-weight: bold; text-align: center; margin-top: -20px;">
+        factubarrio
+    </div>
+    
+    <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-primary rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdownClientes" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Clientes</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownClientes">
+                <li><a class="dropdown-item" href="form_ver_cliente.html">Ver Clientes</a></li>
+                <li><a class="dropdown-item" href="form_crear_cliente.html">crear Cliente</a></li>
+                <li><a class="dropdown-item" href="form_editar_cliente.html">Editar Cliente</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdownVendedores" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Vendedores</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownVendedores">
+                <li><a class="dropdown-item" href="form_ver_vendedor.html">Ver Vendedores</a></li>
+                <li><a class="dropdown-item" href="form_crear_vendedor.html">crear Vendedor</a></li>
+                <li><a class="dropdown-item" href="form_editar_vendedor.html">editar Vendedor</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdownProductos" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Productos</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownProductos">
+                <li><a class="dropdown-item" href="form_ver_producto.html">Ver Productos</a></li>
+                <li><a class="dropdown-item" href="form_crear_producto.html">crear Producto</a></li>
+                <li><a class="dropdown-item" href="form_editar_producto.html">editar producto</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdownFacturas" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Facturas</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownFacturas">
+                <li><a class="dropdown-item" href="form_ver_factura.html">Ver Facturas</a></li>
+                <li><a class="dropdown-item" href="form_generacion_factura.html">generar Factura</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="dropdownFacturas" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">usuario</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownFacturas">
+                <li><a class="dropdown-item" href="form_ver_usuario.html">Ver usuarios</a></li>
+                <li><a class="dropdown-item" href="form_crear_usuario.html">crear usuario</a></li>
+                <li><a class="dropdown-item" href="form_editar_usuario.html">editar usuario</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="container mt-5">
+        <h2>Generar Factura</h2>
+        <form id="formFactura">
+            <div class="mb-3">
+                <label for="cedulaCliente" class="form-label">Cédula del Cliente</label>
+             <input type="text"  placeholder="Digita el numero de cedula y da enter" class="form-control" id="cedulaCliente" required>
+            </div>
+            <div class="mb-3">
+                <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
+                <input type="text" class="form-control" id="nombreCliente" required>
+            </div>
+            <div class="mb-3">
+                <label for="vendedorFactura" class="form-label">Vendedor</label>
+                <select class="form-control" id="vendedorFactura">
+                    <!-- Suponiendo que tienes un array de vendedores cargados en el sistema -->
+                    <option value="">Seleccione un vendedor</option>
+                    <!-- Opciones de vendedores aquí -->
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <input type="hidden" id="productoFacturaCodigo" value="">  <!-- Campo oculto para el código del producto -->
+                <input type="text" id="productoFactura" placeholder="Escribe el nombre del producto" class="form-control">
+                <div id="listaSugerenciasProducto" class="list-group" style="position: absolute; z-index: 1000;"></div>
+            </div>
+            <div class="mb-3">
+                <label for="cantidadFactura" class="form-label">Cantidad</label>
+                <input type="number"  placeholder="Escribe la cantidad  del producto" class="form-control" id="cantidadFactura" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="agregarProductoAFactura()">Agregar a Factura</button>
+        
+        </form>
+        <div id="detallesFactura" class="mt-4">
+            <!-- Aquí se mostrarán los detalles de la factura -->
+        </div>
+    </div>
+    <div id="detallesFactura" class="container mb-3">
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="facturaBody">
+                <!-- Los productos agregados se mostrarán aquí -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">Total</th>
+                    <th id="facturaTotal"></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="d-flex justify-content-center mb-3">
+        <button type="button" class="btn btn-success" onclick="pagarFactura()" style="margin-right: 20px;">Pagar Factura</button>
+        <button type="button" class="btn btn-danger" onclick="anularFactura()">Anular Factura</button>
+    </div>
+
+
+    <script>
+        function cargarProductosParaFactura() {
+            const inputProducto = document.getElementById('productoFactura');
+            inputProducto.addEventListener('input', manejarInputProducto);
+        }
+    
+        function manejarInputProducto() {
+            const texto = this.value.toLowerCase();
+            const productos = cargarProductos();
+            const listaSugerencias = document.getElementById('listaSugerenciasProducto');
+            actualizarSugerencias(texto, productos, listaSugerencias);
+        }
+    
+        function cargarProductos() {
+            return JSON.parse(localStorage.getItem('Productos')) || [];
+        }
+    
+        function actualizarSugerencias(texto, productos, listaSugerencias) {
+            limpiarElemento(listaSugerencias);
+    
+            if (texto.length > 0) {
+                const productosFiltrados = filtrarProductosPorTexto(productos, texto);
+                mostrarSugerencias(productosFiltrados, listaSugerencias);
+            } else {
+                ocultarElemento(listaSugerencias);
+            }
+        }
+    
+        function filtrarProductosPorTexto(productos, texto) {
+            return productos.filter(producto => producto.nombre.toLowerCase().includes(texto));
+        }
+    
+        function mostrarSugerencias(productos, listaSugerencias) {
+            productos.forEach(producto => {
+                const item = crearItemSugerencia(producto);
+                listaSugerencias.appendChild(item);
+            });
+            listaSugerencias.style.display = 'block';
+        }
+    
+        function crearItemSugerencia(producto) {
+            const item = document.createElement('div');
+            item.classList.add('list-group-item', 'list-group-item-action');
+            item.textContent = `${producto.nombre} - Precio: ${producto.precio}`;
+            item.style.cursor = 'pointer';
+            item.onclick = () => seleccionarProducto(producto);
+            return item;
+        }
+    
+        function seleccionarProducto(producto) {
+            const inputProducto = document.getElementById('productoFactura');
+            const listaSugerencias = document.getElementById('listaSugerenciasProducto');
+            inputProducto.value = producto.nombre;
+            document.getElementById('productoFacturaCodigo').value = producto.codigo;
+            limpiarElemento(listaSugerencias);
+            ocultarElemento(listaSugerencias);
+        }
+    
+        function limpiarElemento(elemento) {
+            elemento.innerHTML = '';
+        }
+    
+        function ocultarElemento(elemento) {
+            elemento.style.display = 'none';
+        }
+    
+        document.addEventListener('DOMContentLoaded', cargarProductosParaFactura);
+    </script>
+    
+
+    <script>
+        var factura = [];
+
+        function agregarProductoAFactura() {
+            var codigo = document.getElementById('productoFacturaCodigo').value;
+            var cantidad = parseInt(document.getElementById('cantidadFactura').value);
+            var productos = JSON.parse(localStorage.getItem('Productos'));
+            var producto = productos.find(p => p.codigo === codigo);
+
+            if (!producto.isActive) { 
+                alert("Este producto está deshabilitado.");
+             return;
+            }
+
+            if (!producto || cantidad > producto.cantidadStock) {
+                alert("No hay suficiente stock del producto o el producto no existe.");
+                return;
+            }
+
+            // Reservar stock
+            producto.cantidadStock -= cantidad;
+            var subtotal = producto.precio * cantidad;
+            factura.push({
+            codigo: producto.codigo,
+            producto: producto.nombre,
+            cantidad: cantidad,
+            precioUnitario: producto.precio,
+            subtotal: subtotal
+            });
+
+            // Guardar los cambios en localStorage
+            localStorage.setItem('Productos', JSON.stringify(productos));
+
+            mostrarDetallesFactura();
+
+            document.getElementById('productoFactura').value = ''; // Suponiendo que tienes un campo para el nombre del producto
+            document.getElementById('cantidadFactura').value = ''; // Limpiar la cantidad
+        }
+
+        function mostrarDetallesFactura() {
+            var facturaBody = document.getElementById('facturaBody');
+            var facturaTotal = document.getElementById('facturaTotal');
+
+            facturaBody.innerHTML = ''; // Limpia la tabla antes de agregar nuevos elementos
+            factura.forEach(item => {
+                let row = `<tr>
+                <td>${item.producto}</td>
+                <td>${item.cantidad}</td>
+                <td>$${item.precioUnitario}</td>
+                <td>$${item.subtotal}</td>
+                </tr>`;
+                facturaBody.innerHTML += row;
+            });
+
+            var total = factura.reduce((acc, item) => acc + item.subtotal, 0);
+            facturaTotal.textContent = `$${total}`;
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        cargarProductosParaFactura();
+        // Asegúrate de que todos los elementos están inicializados correctamente.
+        });
+    </script>
+
+    <script>
+        // Funciones para manejar la lógica de la factura
+        function pagarFactura() {
+            if (!validarProductosEnFactura()) return;
+            if (!validarSeleccionDeVendedor()) return;
+
+            let montoPago = obtenerMontoPago();
+            if (montoPago === null) return;
+
+            procesarPago(montoPago);
+        }
+
+        function validarProductosEnFactura() {
+            if (factura.length === 0) {
+                alert("No hay productos en la factura para pagar.");
+                return false;
+            }
+             return true;
+        }
+
+        function validarSeleccionDeVendedor() {
+            let vendedorSeleccionado = document.getElementById('vendedorFactura').value;
+            if (!vendedorSeleccionado) {
+                alert("Por favor, seleccione un vendedor.");
+                return false;
+            }
+            return true;
+        }
+
+        function obtenerMontoPago() {
+            let montoPago = prompt("Ingrese el monto con el que va a pagar:");
+            if (!montoPago) return null;
+
+            return parseFloat(montoPago);
+        }
+
+        function procesarPago(montoPago) {
+            let totalFactura = factura.reduce((acc, item) => acc + item.subtotal, 0);
+            if (isNaN(montoPago) || montoPago < totalFactura) {
+                alert("El monto ingresado no es válido o es insuficiente para pagar la factura.");
+                return;
+            }
+
+            let cambio = montoPago - totalFactura;
+            guardarFactura(montoPago, totalFactura, cambio);
+            alert(`Factura pagada con éxito! El cambio a devolver es: $${cambio.toFixed(2)}`);
+            limpiarCamposFactura();
+        }
+
+        function guardarFactura(montoPago, totalFactura, cambio) {
+            let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+            let nuevaFactura = {
+                id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
+                fecha: new Date().toISOString().slice(0, 10),
+                hora: new Date().toTimeString().split(' ')[0],
+                cliente: document.getElementById('nombreCliente').value,
+                vendedor: document.getElementById('vendedorFactura').value,
+                items: factura,
+                total: totalFactura,
+                montoPagado: montoPago,
+                cambio: cambio
+            };
+
+            facturas.push(nuevaFactura);
+            localStorage.setItem('Facturas', JSON.stringify(facturas));
+        }
+
+        function anularFactura() {
+            if (!validarProductosEnFactura()) return;
+
+            var productos = JSON.parse(localStorage.getItem('Productos'));
+            devolverStock(productos);
+            alert("Factura anulada con éxito.");
+            limpiarCamposFactura();
+        }
+
+        function devolverStock(productos) {
+            factura.forEach(item => {
+                var producto = productos.find(p => p.codigo === item.codigo);
+                if (producto) {
+                producto.cantidadStock += item.cantidad;
+                }
+            });
+            localStorage.setItem('Productos', JSON.stringify(productos));
+            factura = []; // Vaciar la factura
+        }
+
+        function limpiarCamposFactura() {
+            // Limpiar todos los campos relacionados con la factura
+            // Implementar según la estructura de tu formulario
+        }
+
+    </script>
+
+    <script>
+        function limpiarCamposFactura() {
+            // Limpieza de los campos de producto
+            document.getElementById('productoFactura').value = '';
+            document.getElementById('cantidadFactura').value = '';
+            factura = [];  // Reinicia el arreglo de factura
+            mostrarDetallesFactura();  // Actualiza la tabla para mostrar que está vacía
+
+            // Limpieza de los campos del cliente
+            document.getElementById('cedulaCliente').value = '';
+            document.getElementById('nombreCliente').value = '';
+
+            // Limpieza del selector de vendedores
+            document.getElementById('vendedorFactura').selectedIndex = 0;  // Establece el selector en la posición inicial
+        }
+
+    </script>
+
+    <script>
+        // Event listener para manejar el ingreso de cédula
+        document.getElementById('cedulaCliente').addEventListener('keypress', manejarTeclaPresionada);
+
+        function manejarTeclaPresionada(event) {
+            // Actuar solo cuando se presione Enter
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Previene la acción por defecto de enviar el formulario
+                buscarClientePorCedula();
+            }
+        }
+
+        function buscarClientePorCedula() {
+            let cedulaIngresada = document.getElementById('cedulaCliente').value.trim();
+            let clientes = cargarClientes();
+            let clienteEncontrado = encontrarCliente(clientes, cedulaIngresada);
+
+            actualizarCampoNombre(clienteEncontrado);
+        }
+
+        function cargarClientes() {
+            return JSON.parse(localStorage.getItem('clientes')) || []; // Asegúrate de usar 'clientes' en minúsculas
+        }
+
+        function encontrarCliente(clientes, cedula) {
+            return clientes.find(cliente => cliente.cedula === cedula);
+        }
+
+        function actualizarCampoNombre(clienteEncontrado) {
+            let campoNombre = document.getElementById('nombreCliente');
+            if (clienteEncontrado) {
+                // Si se encuentra el cliente, mostrar el nombre completo
+                campoNombre.value = `${clienteEncontrado.nombre} ${clienteEncontrado.apellido}`;
+            } else {
+                // Limpiar el campo nombre si no se encuentra la cédula
+                campoNombre.value = '';
+                alert('Cliente no encontrado');
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        cargarVendedores();
+        });
+
+        function cargarVendedores() {
+            let vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
+            let selectorVendedor = document.getElementById('vendedorFactura');
+            selectorVendedor.innerHTML = '<option value="">Seleccione un vendedor</option>'; // Opción predeterminada
+
+            vendedores.forEach(vendedor => {
+                let opcion = document.createElement('option');
+                // Combinamos el nombre y apellido para mostrarlo y usarlo como valor
+                opcion.value = vendedor.nombre + " " + vendedor.apellido;
+                opcion.textContent = vendedor.nombre + " " + vendedor.apellido;
+                selectorVendedor.appendChild(opcion);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', cargarVendedores);
+
+    </script>
+</body>
+</html>
