@@ -320,34 +320,55 @@
     
     </script>
 
-    <script>
-       function eliminarProducto() {
-            if (productoActual) {
-                var confirmacion = confirm("¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.");
-                if (confirmacion) {
-                    var productos = JSON.parse(localStorage.getItem('Productos')) || [];
-                    var index = productos.findIndex(p => p.codigo === productoActual.codigo);
-
-                    if (index !== -1) {
-                    // Marcar el producto como eliminado en lugar de eliminarlo
-                    productos[index].isDeleted = true;
-                    localStorage.setItem('Productos', JSON.stringify(productos));
-                    alert('Producto marcado como eliminado.');
-
-                    limpiarFormularioProducto();  // Limpia el formulario después de eliminar el producto
-                    limpiarListaProductos(); // Asegúrate de que esta función esté definida para actualizar la lista de productos
-                    productoActual = null;  // Resetear la variable productoActual
-                    } else {
-                    alert('Error: Producto no encontrado.');
-                 }
+<script>
+    function eliminarProducto() {
+        if (productoActual) {
+            var confirmacion = confirm("¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.");
+            if (!confirmacion) {
+                return;
             }
+
+            var productos = JSON.parse(localStorage.getItem('Productos')) || [];
+            var facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+            var historialVentas = JSON.parse(localStorage.getItem('historial_ventas')) || [];
+            var index = productos.findIndex(p => p.codigo === productoActual.codigo);
+
+            if (index !== -1) {
+                // Filtrar facturas que contienen este producto
+                var facturasDelProducto = facturas.filter(factura =>
+                    factura.items.some(item => item.codigo === productos[index].codigo));
+
+                // Agregar estas facturas al historial antes de eliminar el producto
+                if (facturasDelProducto.length > 0) {
+                    historialVentas.push(...facturasDelProducto);
+                    localStorage.setItem('historial_ventas', JSON.stringify(historialVentas));
+                }
+
+                // Marcar el producto como eliminado
+                productos[index].isDeleted = true;
+                localStorage.setItem('Productos', JSON.stringify(productos));
+                alert('Producto marcado como eliminado y ventas asociadas archivadas.');
+
+                limpiarFormularioProducto();  // Limpia el formulario después de eliminar el producto
+                limpiarListaProductos(); // Asegúrate de que esta función esté definida para actualizar la lista de productos
+                productoActual = null;  // Resetear la variable productoActual
             } else {
-                alert('No hay ningún producto cargado para eliminar.');
+                alert('Error: Producto no encontrado.');
             }
+        } else {
+            alert('No hay ningún producto cargado para eliminar.');
         }
+    }
 
+    function limpiarFormularioProducto() {
+        // Implementación específica para limpiar el formulario de productos
+    }
 
-    </script>
+    function limpiarListaProductos() {
+        // Implementación específica para actualizar la lista de productos
+    }
+</script>
+
     <script>
        function limpiarFormularioProducto() {
             document.getElementById('codigoProducto').value = '';
