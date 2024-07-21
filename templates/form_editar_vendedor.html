@@ -101,8 +101,8 @@
     </div>
 
     <div id="datosVendedor" class="container mt-5 ">
-         <h2>Editar Vendedor</h2>
-        <form action="/update-Vendedor" method="post">
+        <h2>Editar Vendedor</h2>
+        <form action="/update-Vendedor" method="post" onsubmit="guardarCambios(event)">
             <div class="mb-3">
                 <label for="nombreVendedor" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombreVendedor" name="nombreVendedor" required>
@@ -127,14 +127,11 @@
                 <label for="emailVendedor" class="form-label">Email</label>
                 <input type="email" class="form-control" id="emailVendedor" name="emailVendedor" required>
             </div>
-            </form>
-            
-
             <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-primary" onclick="guardarCambios()">Guardar Cambios</button>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </div>
-          
         </form>
+            
         <form>
             <div class="container mt-5">
                 <h2>Detalles del Vendedor</h2>
@@ -155,17 +152,7 @@
             }
         }
     </script>
-    <script>
-        function guardarCambios() {
-           console.log('Guardando cambios...');
     
-           document.getElementById('successMessage').style.display = 'block';
-    
-           setTimeout(function() {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 5000); 
-        }
-    </script>
     
     
     <script>
@@ -206,7 +193,10 @@
     
 
     <script>
-        function guardarCambios() {
+        function guardarCambios(event) {
+            event.preventDefault();
+            
+
             var cedula = document.getElementById('buscarCedula').value;
             var vendedores = JSON.parse(localStorage.getItem('Vendedores')) || [];
             var indice = vendedores.findIndex(vendedor => vendedor.cedula === cedula);
@@ -254,21 +244,21 @@
         }
     
         function archivarVentasVendedor(nombreVendedor) {
-    var facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
-    var historialVentas = JSON.parse(localStorage.getItem('HistorialVentas')) || [];
+            var facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+            var historialVentas = JSON.parse(localStorage.getItem('HistorialVentas')) || [];
 
-    var ventasDelVendedor = facturas.filter(factura => factura.vendedor === nombreVendedor);
+            var ventasDelVendedor = facturas.filter(factura => factura.vendedor === nombreVendedor);
 
-    if (ventasDelVendedor.length > 0) {
-        historialVentas.push(...ventasDelVendedor);
-        localStorage.setItem('HistorialVentas', JSON.stringify(historialVentas));
+            if (ventasDelVendedor.length > 0) {
+                historialVentas.push(...ventasDelVendedor);
+                localStorage.setItem('HistorialVentas', JSON.stringify(historialVentas));
 
-        var facturasActualizadas = facturas.filter(factura => factura.vendedor !== nombreVendedor);
-        localStorage.setItem('Facturas', JSON.stringify(facturasActualizadas));
-    } else {
-        alert("No se encontraron ventas para este vendedor.");
-    }
-}
+                var facturasActualizadas = facturas.filter(factura => factura.vendedor !== nombreVendedor);
+                localStorage.setItem('Facturas', JSON.stringify(facturasActualizadas));
+            } else {
+                alert("No se encontraron ventas para este vendedor.");
+            }
+        }
 
     
         function limpiarformulario() {
