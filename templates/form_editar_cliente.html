@@ -102,7 +102,7 @@
   </div>
     <div id="datosCliente" class="container mt-5 ">
         <h2>Editar Cliente</h2>
-        <form action="/update-cliente" method="post">
+        <form id="formCrearProducto" onsubmit="guardarCambios(event)">
             <div class="mb-3">
                 <label for="nombreCliente" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombreCliente" name="nombreCliente" required>
@@ -135,7 +135,7 @@
             
             
             <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-primary" onclick="guardarCambios()">Guardar Cambios</button>
+                <button type="submit" class="btn btn-primary" onclick="guardarCambios()">Guardar Cambios</button>
             </div>
           
         </form>
@@ -161,21 +161,6 @@
         }
     </script>
     
-    <script>
-        function guardarCambios() {
-           
-            console.log('Guardando cambios...');
-    
-           
-            document.getElementById('successMessage').style.display = 'block';
-    
-           
-            setTimeout(function() {
-                document.getElementById('successMessage').style.display = 'none';
-            }, 5000); 
-        }
-    </script>
-
     <script>
         function buscarYEditarCliente() {
             var cedula = document.getElementById('buscarCedula').value;
@@ -205,7 +190,8 @@
         }
 
     
-        function guardarCambios() {
+        function guardarCambios(event) {
+            event.preventDefault();
             var cedula = document.getElementById('buscarCedula').value;
             var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
             var cliente = clientes.find(cliente => cliente.cedula === cedula);
