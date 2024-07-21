@@ -41,6 +41,10 @@
             text-align: center;
             margin-top: -20px;  
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -95,27 +99,27 @@
         <form id="formCrearUsuario" onsubmit="guardarVendedor(event)">
             <div class="mb-3">
                 <label for="nombreVendedor" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombreVendedor" name="nombreVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="nombreVendedor" name="nombreVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="apellidoVendedor" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="apellidoVendedor" name="apellidoVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="apellidoVendedor" name="apellidoVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="cedulaVendedor" class="form-label">Cédula</label>
-                <input type="text" class="form-control" id="cedulaVendedor" name="cedulaVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="cedulaVendedor" name="cedulaVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="telefonoVendedor" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control" id="telefonoVendedor" name="telefonoVendedor" required>
+                <input type="tel" class="form-control form-control-sm" id="telefonoVendedor" name="telefonoVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="direccionVendedor" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="direccionVendedor" name="direccionVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="direccionVendedor" name="direccionVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="emailVendedor" class="form-label">Email</label>
-                <input type="email" class="form-control" id="emailVendedor" name="emailVendedor" required>
+                <input type="email" class="form-control form-control-sm" id="emailVendedor" name="emailVendedor" required>
             </div>
             <button type="submit" class="btn btn-primary" onclick="guardarVendedor()">Guardar vendedor</button>
 

@@ -41,6 +41,10 @@
             text-align: center;
             margin-top: -20px;  
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -94,19 +98,19 @@
         <form id="formCrearProducto" onsubmit="guardarProducto(event)">
             <div class="mb-3">
                 <label for="codigoProducto" class="form-label">Código</label>
-                <input type="text" class="form-control" id="codigoProducto" required>
+                <input type="text" class="form-control form-control-sm" id="codigoProducto" required>
             </div>
             <div class="mb-3">
                 <label for="nombreProducto" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombreProducto" required>
+                <input type="text" class="form-control form-control-sm" id="nombreProducto" required>
             </div>
             <div class="mb-3">
                 <label for="descripcionProducto" class="form-label">Descripción</label>
-                <textarea class="form-control" id="descripcionProducto" rows="3" required></textarea>
+                <textarea class="form-control form-control-sm" id="descripcionProducto" rows="3" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="categoriaProducto" class="form-label">Categoría</label>
-                <select class="form-select" id="categoriaProducto" required>
+                <select class="form-select form-control-sm" id="categoriaProducto" required>
                     <option value="">Seleccione una categoría</option>
                     <option value="Abarrotes">Abarrotes</option>
                     <option value="Productos Frescos">Productos Frescos</option>
@@ -127,11 +131,11 @@
             
             <div class="mb-3">
                 <label for="precioProducto" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="precioProducto" required step="0.01">
+                <input type="number" class="form-control form-control-sm" id="precioProducto" required step="0.01">
             </div>
             <div class="mb-3">
                 <label for="unidadMedidaProducto" class="form-label">Unidad de Medida</label>
-                <select class="form-select" id="unidadMedidaProducto" required>
+                <select class="form-select form-control-sm" id="unidadMedidaProducto" required>
                     <option value="">Seleccione una unidad</option>
                     <optgroup label="Peso">
                         <option value="kg">Kilogramos (kg)</option>
@@ -158,11 +162,11 @@
             </div>
             <div class="mb-3">
                 <label for="presentacionProducto" class="form-label">Presentación</label>
-                <input type="text" class="form-control" id="presentacionProducto" required>
+                <input type="text" class="form-control form-control-sm" id="presentacionProducto" required>
             </div>
             <div class="mb-3">
                 <label for="cantidadStockProducto" class="form-label">Cantidad en Stock</label>
-                <input type="number" class="form-control" id="cantidadStockProducto" required>
+                <input type="number" class="form-control form-control-sm" id="cantidadStockProducto" required>
             </div>
             <button type="submit" class="btn btn-primary">Guardar Producto</button>
         </form>

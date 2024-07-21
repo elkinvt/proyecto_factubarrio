@@ -41,6 +41,10 @@
             text-align: center;
             margin-top: -20px;  
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -97,27 +101,27 @@
         <form id="formCrearUsuario" onsubmit="guardarUsuario(event)">
             <div class="mb-3">
                 <label for="cedulaVendedor" class="form-label">Cédula del Vendedor</label>
-                <input type="text" placeholder="Ingrese cédula del vendedor y precione enter"  class="form-control" id="cedulaVendedor" required onkeypress="cargarDatosVendedor(event)">
+                <input type="text" placeholder="Ingrese cédula del vendedor y precione enter"  class="form-control form-control-sm" id="cedulaVendedor" required onkeypress="cargarDatosVendedor(event)">
             </div>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" disabled>
+                <input type="text" class="form-control form-control-sm" id="nombre" disabled>
             </div>
             <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellido" disabled>
+                <input type="text" class="form-control form-control-sm" id="apellido" disabled>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" disabled>
+                <input type="email" class="form-control form-control-sm" id="email" disabled>
             </div>
             <div class="mb-3">
                 <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control" id="nombreUsuario" required>
+                <input type="text" class="form-control form-control-sm" id="nombreUsuario" required>
             </div>
             <div class="mb-3">
                 <label for="contrasenaUsuario" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="contrasenaUsuario" required>
+                <input type="password" class="form-control form-control-sm" id="contrasenaUsuario" required>
             </div>
             <button type="submit" class="btn btn-primary" onclick="guardarUsuario()">Guardar Usuario</button>
         </form>

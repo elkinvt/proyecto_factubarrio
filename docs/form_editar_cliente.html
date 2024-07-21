@@ -46,6 +46,10 @@
         .hidden {
             display: none;
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -97,7 +101,7 @@
     </ul>
   <div class="container mt-5">
     <label for="buscarCedula" class="form-label">Cédula del Cliente:</label>
-    <input type="text" placeholder="Ingrese cédula del cliente para mostrar" class="form-control" id="buscarCedula" onkeypress="handleKeyPress(event)">
+    <input type="text" placeholder="Ingrese cédula del cliente para mostrar" class="form-control form-control-sm" id="buscarCedula" onkeypress="handleKeyPress(event)">
     <button onclick="buscarYEditarCliente()" class="btn btn-primary mt-2">Buscar</button>
   </div>
     <div id="datosCliente" class="container mt-5 ">
