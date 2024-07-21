@@ -96,7 +96,7 @@
     </ul>
     <div class="container mt-5">
             <label for="buscarCedula" class="form-label">Cédula del Vendedor:</label>
-            <input type="text"  placeholder="Ingrese cédula del vendedor para mostrar" class="form-control" id="buscarCedula">
+            <input type="text"  placeholder="Ingrese cédula del vendedor para mostrar" class="form-control" id="buscarCedula" onkeypress="handleKeyPress(event)">
             <button onclick="buscarYEditarVendedor()" class="btn btn-primary mt-2">Buscar</button>
     </div>
 
@@ -147,6 +147,14 @@
             
         </form>
     </div>
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // Previene que el formulario se envíe
+                buscarYEditarVendedor();  // Llama a la función que ejecuta la búsqueda
+            }
+        }
+    </script>
     <script>
         function guardarCambios() {
            console.log('Guardando cambios...');
