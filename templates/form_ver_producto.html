@@ -98,7 +98,7 @@
   
     <div class="container mt-5">
         <h2>Buscar producto por Código o Nombre</h2>
-        <input type="text" id="buscarProductoInput" placeholder="Ingrese código o nombre del producto" class="form-control mt-2">
+        <input type="text" id="buscarProductoInput" placeholder="Ingrese código o nombre del producto" class="form-control mt-2" onkeypress="handleKeyPress(event)">
         <button type="button" class="btn btn-primary mt-3" onclick="buscarProducto()">Buscar</button>
         <div id="listaProductos" class="list-group mt-3"></div>
     </div>
@@ -147,6 +147,14 @@
         </form>
 
     </div>
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // Previene que el formulario se envíe
+                buscarProducto();  // Llama a la función que ejecuta la búsqueda
+            }
+        }
+    </script>
 
     <script>
         function buscarProducto() {
