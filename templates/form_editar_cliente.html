@@ -192,6 +192,8 @@
     
         function guardarCambios(event) {
             event.preventDefault();
+
+            
             var cedula = document.getElementById('buscarCedula').value;
             var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
             var cliente = clientes.find(cliente => cliente.cedula === cedula);
