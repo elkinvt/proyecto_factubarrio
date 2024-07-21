@@ -118,7 +118,8 @@
             </div>
             <div class="mb-3">
                 <label for="cantidadFactura" class="form-label">Cantidad</label>
-                <input type="number"  placeholder="Escribe la cantidad  del producto" class="form-control" id="cantidadFactura" required>
+                <input type="number" placeholder="Escribe la cantidad del producto" class="form-control" id="cantidadFactura" required onkeypress="handleEnterPress(event)">
+
             </div>
             <button type="button" class="btn btn-primary" onclick="agregarProductoAFactura()">Agregar a Factura</button>
         
@@ -238,16 +239,23 @@
     
         function agregarProductoAFactura() {
             var codigo = document.getElementById('productoFacturaCodigo').value;
-            var cantidad = parseInt(document.getElementById('cantidadFactura').value);
+            var cantidadInput = document.getElementById('cantidadFactura');
+            var cantidad = parseInt(cantidadInput.value);
             var productos = JSON.parse(localStorage.getItem('Productos'));
             var producto = productos.find(p => p.codigo === codigo && !p.isDeleted);
+    
+            // Validaciones antes de proceder a añadir el producto a la factura
+            if (!codigo || isNaN(cantidad) || cantidad <= 0) {
+                alert("Por favor, verifica que has seleccionado un producto y has introducido una cantidad válida.");
+                return;
+            }
     
             if (!producto) {
                 alert("El producto no existe o ha sido eliminado.");
                 return;
             }
     
-            if (!producto.isActive) { 
+            if (!producto.isActive) {
                 alert("Este producto está deshabilitado.");
                 return;
             }
@@ -273,13 +281,42 @@
     
             mostrarDetallesFactura();
     
-            // Limpiar los campos de entrada después de añadir el producto
+            // Limpiar los campos de entrada después de añadir el producto exitosamente
             document.getElementById('productoFactura').value = '';
-            document.getElementById('cantidadFactura').value = '';
+            document.getElementById('productoFacturaCodigo').value = '';
+            cantidadInput.value = '';
+        }
+        function handleEnterPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // Previene el envío del formulario
+                agregarProductoAFactura();  // Llama a la función para agregar el producto
+            }
+        }
+
+    
+        function mostrarDetallesFactura() {
+            var facturaBody = document.getElementById('facturaBody');
+            var facturaTotal = document.getElementById('facturaTotal');
+    
+            facturaBody.innerHTML = ''; // Limpia la tabla antes de agregar nuevos elementos
+            var total = 0;
+            factura.forEach((item, index) => {
+                let row = `<tr>
+                    <td>${item.producto}</td>
+                    <td>${item.cantidad}</td>
+                    <td>$${item.precioUnitario}</td>
+                    <td>$${item.subtotal}</td>
+                    <td><button onclick="eliminarProductoDeFactura(${index})" class="btn btn-danger btn-sm">Eliminar</button></td>
+                </tr>`;
+                facturaBody.innerHTML += row;
+                total += item.subtotal;
+            });
+    
+            facturaTotal.textContent = `$${total}`;
         }
     
-        
     </script>
+    
     <script>
         function mostrarDetallesFactura() {
             var facturaBody = document.getElementById('facturaBody');
