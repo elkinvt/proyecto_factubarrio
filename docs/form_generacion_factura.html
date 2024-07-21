@@ -42,6 +42,10 @@
         .btn-danger:hover {
             opacity: 0.85;
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
     
 </head>
@@ -96,15 +100,15 @@
         <form id="formFactura">
             <div class="mb-3">
                 <label for="cedulaCliente" class="form-label">Cédula del Cliente</label>
-             <input type="text"  placeholder="Digita el numero de cedula y da enter" class="form-control" id="cedulaCliente" required>
+             <input type="text"  placeholder="Digita el numero de cedula y da enter" class="form-control form-control-sm" id="cedulaCliente" required>
             </div>
             <div class="mb-3">
                 <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
-                <input type="text" class="form-control" id="nombreCliente" required>
+                <input type="text" class="form-control form-control-sm" id="nombreCliente" required>
             </div>
             <div class="mb-3">
                 <label for="vendedorFactura" class="form-label">Vendedor</label>
-                <select class="form-control" id="vendedorFactura">
+                <select class="form-control form-control-sm" id="vendedorFactura">
                     <!-- Suponiendo que tienes un array de vendedores cargados en el sistema -->
                     <option value="">Seleccione un vendedor</option>
                     <!-- Opciones de vendedores aquí -->
@@ -113,15 +117,15 @@
         
             <div class="mb-3">
                 <input type="hidden" id="productoFacturaCodigo" value="">  <!-- Campo oculto para el código del producto -->
-                <input type="text" id="productoFactura" placeholder="Escribe el nombre del producto" class="form-control">
+                <input type="text" id="productoFactura" placeholder="Escribe el nombre del producto" class="form-control form-control-sm">
                 <div id="listaSugerenciasProducto" class="list-group" style="position: absolute; z-index: 1000;"></div>
             </div>
             <div class="mb-3">
                 <label for="cantidadFactura" class="form-label">Cantidad</label>
-                <input type="number" placeholder="Escribe la cantidad del producto" class="form-control" id="cantidadFactura" required onkeypress="handleEnterPress(event)">
+                <input type="number" placeholder="Escribe la cantidad del producto" class="form-control form-control-sm" id="cantidadFactura" required onkeypress="handleEnterPress(event)">
 
             </div>
-            <button type="button" class="btn btn-primary" onclick="agregarProductoAFactura()">Agregar a Factura</button>
+            <button type="button" class="btn btn-primary form-control-sm" onclick="agregarProductoAFactura()">Agregar a Factura</button>
         
         </form>
         <div id="detallesFactura" class="mt-4">
@@ -129,7 +133,7 @@
         </div>
     </div>
     <div id="detallesFactura" class="container mb-3">
-        <table class="table mt-5">
+        <table class="table mt-5 form-control-sm">
             <thead>
                 <tr>
                     <th>Producto</th>
@@ -151,8 +155,8 @@
         </table>
     </div>
     <div class="d-flex justify-content-center mb-3">
-        <button type="button" class="btn btn-success" onclick="pagarFactura()" style="margin-right: 20px;">Pagar Factura</button>
-        <button type="button" class="btn btn-danger" onclick="anularFactura()">Anular Factura</button>
+        <button type="button" class="btn btn-success form-control-sm" onclick="pagarFactura()" style="margin-right: 20px;">Pagar Factura</button>
+        <button type="button" class="btn btn-danger form-control-sm" onclick="anularFactura()">Anular Factura</button>
     </div>
 
 

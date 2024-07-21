@@ -44,6 +44,10 @@
         .hidden {
             display: none;
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 
 </head>
@@ -97,8 +101,8 @@
   
     <div class="container mt-5">
         <h2>Buscar vendedor por Cédula</h2>
-        <input type="text" id="cedulaBuscar" placeholder="Ingrese cédula del vendedor" class="form-control" onkeypress="handleKeyPress(event)">
-        <button type="button" class="btn btn-primary mt-3" onclick="buscarVendedor()">Buscar</button>
+        <input type="text" id="cedulaBuscar" placeholder="Ingrese cédula del vendedor" class="form-control form-control-sm" onkeypress="handleKeyPress(event)">
+        <button type="button" class="btn btn-primary mt-3 form-control-sm" onclick="buscarVendedor()">Buscar</button>
     </div>
 
     <div  id="infoVendedor" class="container mt-5">
@@ -106,27 +110,27 @@
         <form>
             <div class="mb-3">
                 <label>Nombre</label>
-                <input type="text" class="form-control" id="nombreVendedor" readonly> <!-- ID añadido aquí -->
+                <input type="text" class="form-control form-control-sm" id="nombreVendedor" readonly> <!-- ID añadido aquí -->
             </div>
             <div class="mb-3">
                 <label>Apellidos</label>
-                <input type="text" class="form-control" id="apellidoVendedor" readonly> <!-- ID añadido aquí -->
+                <input type="text" class="form-control form-control-sm" id="apellidoVendedor" readonly> <!-- ID añadido aquí -->
             </div>
             <div class="mb-3">
                 <label>Cédula</label>
-                <input type="text" class="form-control" id="cedulaVendedor" readonly > <!-- ID añadido aquí -->
+                <input type="text" class="form-control form-control-sm" id="cedulaVendedor" readonly > <!-- ID añadido aquí -->
             </div>
             <div class="mb-3">
                 <label>Teléfono</label>
-                <input type="text" class="form-control" id="telefonoVendedor" readonly> <!-- ID añadido aquí -->
+                <input type="text" class="form-control form-control-sm" id="telefonoVendedor" readonly> <!-- ID añadido aquí -->
             </div>
             <div class="mb-3">
                 <label>Dirección</label>
-                <input type="text" class="form-control" id="direccionVendedor" readonly> <!-- ID añadido aquí -->
+                <input type="text" class="form-control form-control-sm" id="direccionVendedor" readonly> <!-- ID añadido aquí -->
             </div>
             <div class="mb-3">
                 <label>Email</label>
-                <input type="email" class="form-control" id="emailVendedor" readonly> <!-- ID añadido aquí -->
+                <input type="email" class="form-control form-control-sm" id="emailVendedor" readonly> <!-- ID añadido aquí -->
             </div>
         </form>
     </div>

@@ -46,6 +46,10 @@
         .hidden {
             display: none;
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -96,7 +100,7 @@
     </ul>
     <div class="container mt-5">
             <label for="buscarCedula" class="form-label">Cédula del Vendedor:</label>
-            <input type="text"  placeholder="Ingrese cédula del vendedor para mostrar" class="form-control" id="buscarCedula" onkeypress="handleKeyPress(event)">
+            <input type="text"  placeholder="Ingrese cédula del vendedor para mostrar" class="form-control form-control-sm" id="buscarCedula" onkeypress="handleKeyPress(event)">
             <button onclick="buscarYEditarVendedor()" class="btn btn-primary mt-2">Buscar</button>
     </div>
 
@@ -105,30 +109,30 @@
         <form action="/update-Vendedor" method="post" onsubmit="guardarCambios(event)">
             <div class="mb-3">
                 <label for="nombreVendedor" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombreVendedor" name="nombreVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="nombreVendedor" name="nombreVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="apellidoVendedor" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="apellidoVendedor" name="apellidoVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="apellidoVendedor" name="apellidoVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="cedulaVendedor" class="form-label">Cédula</label>
-                <input type="text" class="form-control" id="cedulaVendedor" name="cedulaVendedor" readonly>
+                <input type="text" class="form-control form-control-sm" id="cedulaVendedor" name="cedulaVendedor" readonly>
             </div>
             <div class="mb-3">
                 <label for="telefonoVendedor" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control" id="telefonoVendedor" name="telefonoVendedor">
+                <input type="tel" class="form-control form-control-sm" id="telefonoVendedor" name="telefonoVendedor">
             </div>
             <div class="mb-3">
                 <label for="direccionVendedor" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="direccionVendedor" name="direccionVendedor" required>
+                <input type="text" class="form-control form-control-sm" id="direccionVendedor" name="direccionVendedor" required>
             </div>
             <div class="mb-3">
                 <label for="emailVendedor" class="form-label">Email</label>
-                <input type="email" class="form-control" id="emailVendedor" name="emailVendedor" required>
+                <input type="email" class="form-control form-control-sm" id="emailVendedor" name="emailVendedor" required>
             </div>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <button type="submit" class="btn btn-primary form-control-sm">Guardar Cambios</button>
             </div>
         </form>
             

@@ -45,6 +45,10 @@
         .hidden {
             display: none;
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -97,7 +101,7 @@
     <div class="container mt-5">
         <h2>Usuarios Registrados</h2>
         <div class="table-responsive"> <!-- Añade esta línea -->
-            <table class="table table-striped table-hover"> <!-- Añadí también table-hover para efecto al pasar el mouse -->
+            <table class="table table-striped table-hover form-control-sm"> <!-- Añadí también table-hover para efecto al pasar el mouse -->
                 <thead>
                     <tr>
                         <th>Cédula</th>

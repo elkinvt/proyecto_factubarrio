@@ -38,6 +38,10 @@
             text-align: center;
             margin-top: -20px;  
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 </head>
 <body>
@@ -88,8 +92,8 @@
     </ul>
     <div class="container mt-5">
         <h2>Consultar Facturas por Fecha</h2>
-        <input type="date" id="fechaConsulta" class="form-control mb-3">
-        <button class="btn btn-primary" onclick="buscarFacturasPorFecha()">Buscar Facturas</button>
+        <input type="date" id="fechaConsulta" class="form-control mb-3 form-control-sm">
+        <button class="btn btn-primary form-control-sm" onclick="buscarFacturasPorFecha()">Buscar Facturas</button>
         <table class="table table-striped mt-3">
             <thead>
                 <tr>
@@ -107,7 +111,7 @@
         </table>
     </div>
     <!-- Modal para mostrar detalles de factura -->
-    <div class="modal fade" id="facturaModal" tabindex="-1" aria-labelledby="facturaModalLabel" aria-hidden="true">
+    <div class="modal fade form-control-sm" id="facturaModal" tabindex="-1" aria-labelledby="facturaModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

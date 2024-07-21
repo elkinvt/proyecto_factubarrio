@@ -44,6 +44,10 @@
         .hidden {
             display: none;
         }
+        .form-control-sm {
+            width: 100%;
+            max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+        }
     </style>
 
 </head>
@@ -96,7 +100,7 @@
     </ul>
     <div class="container mt-5">
         <h2>Buscar Cliente por Cédula</h2>
-        <input type="text" id="cedulaBuscar" placeholder="Ingrese cédula del cliente" class="form-control" onkeypress="handleKeyPress(event)">
+        <input type="text" id="cedulaBuscar" placeholder="Ingrese cédula del cliente" class="form-control form-control-sm" onkeypress="handleKeyPress(event)">
         <button type="button" class="btn btn-primary mt-3" onclick="buscarCliente()">Buscar</button>
     </div>
     <div id="resultadoBusqueda" class="container mt-5"></div>
@@ -106,31 +110,31 @@
         <form>
             <div class="mb-3">
                 <label>Nombre</label>
-                <input type="text" class="form-control" id="clienteNombre">
+                <input type="text" class="form-control form-control-sm" id="clienteNombre">
             </div>
             <div class="mb-3">
                 <label>Apellidos</label>
-                <input type="text" class="form-control" id="clienteApellido">
+                <input type="text" class="form-control form-control-sm" id="clienteApellido">
             </div>
             <div class="mb-3">
                 <label>Cédula</label>
-                <input type="text" class="form-control" id="clienteCedula">
+                <input type="text" class="form-control form-control-sm" id="clienteCedula">
             </div>
             <div class="mb-3">
                 <label>Teléfono</label>
-                <input type="text" class="form-control" id="clienteTelefono">
+                <input type="text" class="form-control form-control-sm" id="clienteTelefono">
             </div>
             <div class="mb-3">
                 <label>Dirección</label>
-                <input type="text" class="form-control" id="clienteDireccion">
+                <input type="text" class="form-control form-control-sm" id="clienteDireccion">
             </div>
             <div class="mb-3">
                 <label>Email</label>
-                <input type="email" class="form-control" id="clienteEmail">
+                <input type="email" class="form-control form-control-sm" id="clienteEmail">
             </div>
             <div class="mb-3">
                 <label>Estado</label>
-                <input type="text" class="form-control" id="clienteEstado" readonly>
+                <input type="text" class="form-control form-control-sm" id="clienteEstado" readonly>
             </div>
                 
                 
