@@ -107,7 +107,7 @@
         <h2>Consultar Facturas por Fecha</h2>
         <input type="date" id="fechaConsulta" class="form-control mb-3 form-control-sm">
         <button class="btn btn-primary form-control-sm" onclick="buscarFacturasPorFecha()">Buscar Facturas</button>
-        <table class="table table-striped mt-3">
+        <table class="table table-striped mt-3 fo">
             <thead>
                 <tr>
                     <th>ID Factura</th>
@@ -124,8 +124,8 @@
         </table>
     </div>
     <!-- Modal para mostrar detalles de factura -->
-    <div class="modal fade form-control-sm" id="facturaModal" tabindex="-1" aria-labelledby="facturaModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="facturaModal" tabindex="-1" aria-labelledby="facturaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="facturaModalLabel">Detalles de Factura</h5>
