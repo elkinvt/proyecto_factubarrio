@@ -137,8 +137,10 @@
         <form id="formFactura">
             <div class="mb-3">
                 <label for="cedulaCliente" class="form-label">Cédula del Cliente</label>
-             <input type="text"  placeholder="Digita el numero de cedula y da enter" class="form-control form-control-sm" id="cedulaCliente" required>
+                <input type="text" placeholder="Digita el número de cédula y da enter o clic en buscar" class="form-control form-control-sm mb-2" id="cedulaCliente" required>
+                <button type="button" class="btn btn-primary form-control-sm" onclick="buscarClientePorCedula()">Buscar</button>
             </div>
+            
             <div class="mb-3">
                 <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
                 <input type="text" class="form-control form-control-sm" id="nombreCliente" required>
@@ -380,12 +382,26 @@
         }
     
         function eliminarProductoDeFactura(index) {
-            // Confirmación para evitar eliminación accidental
-            if (confirm('¿Estás seguro de que deseas eliminar este producto de la factura?')) {
-                factura.splice(index, 1); // Elimina el producto del array de factura
-                mostrarDetallesFactura(); // Actualiza la tabla de detalles de factura
-            }
-        }
+    // Confirmación para evitar eliminación accidental
+    if (!confirm('¿Estás seguro de que deseas eliminar este producto de la factura?')) {
+        return; // Salir si el usuario cancela la operación
+    }
+
+    let productoEliminado = factura[index]; // Guarda el producto a eliminar para referencia
+    factura.splice(index, 1); // Elimina el producto del array de factura
+
+    // Cargar productos desde el almacenamiento local
+    let productos = JSON.parse(localStorage.getItem('Productos')) || [];
+
+    // Encontrar el producto específico y devolver la cantidad al stock
+    let producto = productos.find(p => p.codigo === productoEliminado.codigo);
+    if (producto) {
+        producto.cantidadStock += productoEliminado.cantidad; // Devuelve la cantidad al stock
+        localStorage.setItem('Productos', JSON.stringify(productos)); // Guardar los productos actualizados en el almacenamiento local
+    }
+
+    mostrarDetallesFactura(); // Actualiza la tabla de detalles de factura para reflejar la eliminación
+}
     </script>
     
     
@@ -475,31 +491,31 @@
         }
 
         function guardarFactura(montoPago, totalFactura, cambio) {
-    let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
-    let selectorVendedor = document.getElementById('vendedorFactura');
-    let nombreVendedor = selectorVendedor.options[selectorVendedor.selectedIndex].text;  // Obtiene el texto del vendedor seleccionado, que debería ser el nombre completo
+            let facturas = JSON.parse(localStorage.getItem('Facturas')) || [];
+            let selectorVendedor = document.getElementById('vendedorFactura');
+            let nombreVendedor = selectorVendedor.options[selectorVendedor.selectedIndex].text;  // Obtiene el texto del vendedor seleccionado, que debería ser el nombre completo
 
-    let nuevaFactura = {
-        id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
-        fecha: new Date().toISOString().slice(0, 10),
-        hora: new Date().toTimeString().split(' ')[0],
-        cliente: document.getElementById('nombreCliente').value,
-        vendedor: nombreVendedor,  // Guardar el nombre completo del vendedor obtenido del selector
-        items: factura,
-        total: totalFactura,
-        montoPagado: montoPago,
-        cambio: cambio
-    };
+            let nuevaFactura = {
+                id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
+                fecha: new Date().toISOString().slice(0, 10),
+                hora: new Date().toTimeString().split(' ')[0],
+                cliente: document.getElementById('nombreCliente').value,
+                vendedor: nombreVendedor,  // Guardar el nombre completo del vendedor obtenido del selector
+                items: factura,
+                total: totalFactura,
+                montoPagado: montoPago,
+                cambio: cambio
+            };
 
-    facturas.push(nuevaFactura);
-    localStorage.setItem('Facturas', JSON.stringify(facturas));
-    return true;
-}
+            facturas.push(nuevaFactura);
+            localStorage.setItem('Facturas', JSON.stringify(facturas));
+            return true;
+        }
 
         
         function anularFactura() {
             // Primero valida que hay productos en la factura
-            if (!validarProductosEnFactura()) {
+            if (factura.length === 0) {
                 alert("No hay productos en la factura para anular.");
                 return;  // Salir de la función si no hay productos para anular
             }
