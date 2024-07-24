@@ -231,7 +231,7 @@
             }
             } else {
             ocultarElemento(listaSugerencias);
-         }
+            }
         }
 
         function filtrarProductosPorTexto(productos, texto) {
@@ -243,7 +243,7 @@
             const item = crearItemSugerencia(producto);
             listaSugerencias.appendChild(item);
             });
-                listaSugerencias.style.display = 'block';
+            listaSugerencias.style.display = 'block';
         }
 
         function crearItemSugerencia(producto) {
@@ -382,26 +382,26 @@
         }
     
         function eliminarProductoDeFactura(index) {
-    // Confirmación para evitar eliminación accidental
-    if (!confirm('¿Estás seguro de que deseas eliminar este producto de la factura?')) {
-        return; // Salir si el usuario cancela la operación
-    }
+            // Confirmación para evitar eliminación accidental
+            if (!confirm('¿Estás seguro de que deseas eliminar este producto de la factura?')) {
+                return; // Salir si el usuario cancela la operación
+            }
 
-    let productoEliminado = factura[index]; // Guarda el producto a eliminar para referencia
-    factura.splice(index, 1); // Elimina el producto del array de factura
+            let productoEliminado = factura[index]; // Guarda el producto a eliminar para referencia
+            factura.splice(index, 1); // Elimina el producto del array de factura
 
-    // Cargar productos desde el almacenamiento local
-    let productos = JSON.parse(localStorage.getItem('Productos')) || [];
+            // Cargar productos desde el almacenamiento local
+            let productos = JSON.parse(localStorage.getItem('Productos')) || [];
 
-    // Encontrar el producto específico y devolver la cantidad al stock
-    let producto = productos.find(p => p.codigo === productoEliminado.codigo);
-    if (producto) {
-        producto.cantidadStock += productoEliminado.cantidad; // Devuelve la cantidad al stock
-        localStorage.setItem('Productos', JSON.stringify(productos)); // Guardar los productos actualizados en el almacenamiento local
-    }
+            // Encontrar el producto específico y devolver la cantidad al stock
+            let producto = productos.find(p => p.codigo === productoEliminado.codigo);
+            if (producto) {
+                producto.cantidadStock += productoEliminado.cantidad; // Devuelve la cantidad al stock
+                localStorage.setItem('Productos', JSON.stringify(productos)); // Guardar los productos actualizados en el almacenamiento local
+            }
 
-    mostrarDetallesFactura(); // Actualiza la tabla de detalles de factura para reflejar la eliminación
-}
+            mostrarDetallesFactura(); // Actualiza la tabla de detalles de factura para reflejar la eliminación
+        }
     </script>
     
     
