@@ -37,6 +37,11 @@
             font-weight: bold;
             text-align: center;
             margin-top: -20px;  
+        
+        }
+        .form-control {
+            max-width: 400px; /* Ajusta según necesites */
+            width: auto;
         }
         .container {
             display: flex;
@@ -155,10 +160,6 @@
         {% endblock%}
     </main>
    
-    
-    <footer>
-        <button class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
-    </footer>
     <script>
         function cerrarSesion() {
             localStorage.clear();  
@@ -166,6 +167,11 @@
             window.location.href = 'cerrar_sesion';
         }
     </script>
+    
+    <footer>
+        <button class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </footer>
+   
         
 </body>
 </html>
