@@ -1,221 +1,221 @@
 {% extends 'layout.html' %}
 {% block title %} editar_cliente{%endblock %}
 {% block content %}
-<div class="container mt-5">
-    <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
-    <select class="form-control form-control-sm" id="tipoDocumento">
-        <option value="CC">Cédula de Ciudadanía</option>
-        <option value="TI">Tarjeta de Identidad</option>
-        <option value="CE">Cédula de Extranjería</option>
-        <option value="PA">Pasaporte</option>
-        <option value="RC">Registro Civil</option>
-        <option value="NIT">NIT</option>
-    </select>
-    <label for="buscarCedula" class="form-label">Número de Documento:</label>
-    <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm" id="buscarCedula" onkeypress="handleKeyPress(event)">
-    <button onclick="buscarYEditarCliente()" class="btn btn-primary mt-2">Buscar</button>
-</div>
+    <div class="container mt-5">
+        <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
+        <select class="form-control form-control-sm" id="tipoDocumento">
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="PA">Pasaporte</option>
+            <option value="RC">Registro Civil</option>
+            <option value="NIT">NIT</option>
+        </select>
+        <label for="buscarCedula" class="form-label">Número de Documento:</label>
+        <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm" id="buscarCedula" onkeypress="handleKeyPress(event)">
+        <button onclick="buscarYEditarCliente()" class="btn btn-primary mt-2">Buscar</button>
+    </div>
 
-<div id="datosCliente" class="container mt-5 ">
-    <h2>Editar Cliente</h2>
-    <form id="formCrearProducto" onsubmit="guardarCambios(event)">
-        <div class="mb-3">
-            <label for="nombreCliente" class="form-label">Nombre</label>
-            <input type="text" class="form-control form-control-sm" id="nombreCliente" name="nombreCliente" required>
-        </div>
-        <div class="mb-3">
-            <label for="apellidoCliente" class="form-label">Apellidos</label>
-            <input type="text" class="form-control form-control-sm" id="apellidoCliente" name="apellidoCliente" required>
-        </div>
-        <div class="mb-3">
-            <label for="cedulaCliente" class="form-label">Numero documento</label>
-            <input type="text" class="form-control form-control-sm" id="cedulaCliente" name="cedulaCliente" readonly>
-        </div>
-        <div class="mb-3">
-            <label for="telefonoCliente" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control form-control-sm" id="telefonoCliente" name="telefonoCliente">
-        </div>
-        <div class="mb-3">
-            <label for="direccionCliente" class="form-label">Dirección</label>
-            <input type="text" class="form-control form-control-sm" id="direccionCliente" name="direccionCliente" required>
-        </div>
-        <div class="mb-3">
-            <label for="emailCliente" class="form-label">Email</label>
-            <input type="email" class="form-control form-control-sm" id="emailCliente" name="emailCliente" required>
-        </div>
-        <div class="mb-3">
-            <label for="estadoCliente" class="form-label">Estado del Cliente</label>
-            <input type="text" class="form-control form-control-sm" id="estadoCliente" name="estadoCliente" readonly>
-        </div>
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary form-control-sm">Guardar Cambios</button>
-        </div>
-      
-    </form>
-    <form>
-        <div class="container mt-5">
-            <h2>Detalles del Cliente</h2>
-            <div id="clienteDetalles" class="hidden">
-                <!-- Campos existentes... -->
+    <div id="datosCliente" class="container mt-5 ">
+        <h2>Editar Cliente</h2>
+        <form id="formCrearProducto" onsubmit="guardarCambios(event)">
+            <div class="mb-3">
+                <label for="nombreCliente" class="form-label">Nombre</label>
+                <input type="text" class="form-control form-control-sm" id="nombreCliente" name="nombreCliente" required>
             </div>
-            <!-- Botones para controlar el estado del cliente -->
-            <button type="button" class="btn btn-warning mb-2" onclick="toggleEstadoCliente()">Bloquear/Desbloquear Cliente</button>
-            <button type="button" class="btn btn-danger" onclick="eliminarCliente()">Eliminar Cliente</button>
+            <div class="mb-3">
+                <label for="apellidoCliente" class="form-label">Apellidos</label>
+                <input type="text" class="form-control form-control-sm" id="apellidoCliente" name="apellidoCliente" required>
+            </div>
+            <div class="mb-3">
+                <label for="cedulaCliente" class="form-label">Numero documento</label>
+                <input type="text" class="form-control form-control-sm" id="cedulaCliente" name="cedulaCliente" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="telefonoCliente" class="form-label">Teléfono</label>
+                <input type="tel" class="form-control form-control-sm" id="telefonoCliente" name="telefonoCliente">
+            </div>
+            <div class="mb-3">
+                <label for="direccionCliente" class="form-label">Dirección</label>
+                <input type="text" class="form-control form-control-sm" id="direccionCliente" name="direccionCliente" required>
+            </div>
+            <div class="mb-3">
+                <label for="emailCliente" class="form-label">Email</label>
+                <input type="email" class="form-control form-control-sm" id="emailCliente" name="emailCliente" required>
+            </div>
+            <div class="mb-3">
+                <label for="estadoCliente" class="form-label">Estado del Cliente</label>
+                <input type="text" class="form-control form-control-sm" id="estadoCliente" name="estadoCliente" readonly>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary form-control-sm">Guardar Cambios</button>
+            </div>
+      
+        </form>
+        <form>
+            <div class="container mt-5">
+                <h2>Detalles del Cliente</h2>
+                <div id="clienteDetalles" class="hidden">
+                    <!-- Campos existentes... -->
+                </div>
+                <!-- Botones para controlar el estado del cliente -->
+                <button type="button" class="btn btn-warning mb-2" onclick="toggleEstadoCliente()">Bloquear/Desbloquear Cliente</button>
+                <button type="button" class="btn btn-danger" onclick="eliminarCliente()">Eliminar Cliente</button>
 
-        </div>
+            </div>
         
-    </form>
-</div>
-<script>
-    function handleKeyPress(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();  // Previene que el formulario se envíe
-            buscarYEditarCliente();  // Llama a la función que ejecuta la búsqueda
-        }
-    }
-</script>
-
-<script>
-    function buscarYEditarCliente() {
-        var tipoDocumento = document.getElementById('tipoDocumento').value;
-        var numeroDocumento = document.getElementById('buscarCedula').value.trim();
-
-        if (!numeroDocumento) {
-            alert("Por favor, ingrese el número de documento.");
-            return;
-        }
-
-        var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-        var cliente = clientes.find(cliente => cliente.tipoDocumento === tipoDocumento && cliente.numeroDocumento === numeroDocumento);
-
-        if (cliente) {
-            document.getElementById('nombreCliente').value = cliente.nombre;
-            document.getElementById('apellidoCliente').value = cliente.apellido;
-            document.getElementById('cedulaCliente').value = cliente.numeroDocumento; // Asegúrate de que 'cedulaCliente' ahora maneje 'numeroDocumento'
-            document.getElementById('telefonoCliente').value = cliente.telefono;
-            document.getElementById('direccionCliente').value = cliente.direccion;
-            document.getElementById('emailCliente').value = cliente.email;
-            document.getElementById('estadoCliente').value = cliente.isActive ? "Activo" : "Inactivo";
-            document.getElementById('datosCliente').style.display = 'block';
-        } else {
-            alert('Cliente no encontrado');
-            document.getElementById('buscarCedula').value = '';
-        }
-    }
-
-
-
-    function guardarCambios(event) {
-        event.preventDefault();
-
-        var tipoDocumento = document.getElementById('tipoDocumento').value;
-        var numeroDocumento = document.getElementById('buscarCedula').value;
-        var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-        var cliente = clientes.find(cliente => cliente.tipoDocumento === tipoDocumento && cliente.numeroDocumento === numeroDocumento);
-
-        if (cliente) {
-            cliente.nombre = document.getElementById('nombreCliente').value;
-            cliente.apellido = document.getElementById('apellidoCliente').value;
-            cliente.telefono = document.getElementById('telefonoCliente').value;
-            cliente.direccion = document.getElementById('direccionCliente').value;
-            cliente.email = document.getElementById('emailCliente').value;
-
-            localStorage.setItem('clientes', JSON.stringify(clientes));
-            alert('Cambios guardados correctamente');
-            limpiarformulario();
-            document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
-        } else {
-            alert('Error al guardar los cambios');
-        }
-    }
-
-
-</script>
-<script>
-    function limpiarformulario() {
-        document.getElementById('nombreCliente').value = '';
-        document.getElementById('apellidoCliente').value = '';
-        document.getElementById('cedulaCliente').value = ''; // Este campo podría cambiar de nombre si decides usar "numeroDocumento"
-        document.getElementById('telefonoCliente').value = '';
-        document.getElementById('direccionCliente').value = '';
-        document.getElementById('emailCliente').value = '';
-        document.getElementById('tipoDocumento').value = 'CC'; // Restablece a 'Cédula de Ciudadanía' como predeterminado, ajusta según necesidad
-    }
-</script>
-
-<script>
-    function toggleEstadoCliente() {
-        var numeroDocumento = document.getElementById('buscarCedula').value; // Asegúrate de que este campo obtiene el número de documento correctamente.
-        var tipoDocumento = document.getElementById('tipoDocumento').value; // Asegúrate de que este campo obtiene el tipo de documento correctamente.
-        if (!numeroDocumento || !tipoDocumento) {
-            alert('Por favor, ingrese el número y tipo de documento para buscar el cliente.');
-            return;
-        }
-
-        var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-        var cliente = clientes.find(cliente => cliente.numeroDocumento === numeroDocumento && cliente.tipoDocumento === tipoDocumento);
-
-        if (cliente) {
-            var confirmacion = confirm(`Está a punto de ${cliente.isActive ? 'bloquear' : 'activar'} al cliente. ¿Desea continuar?`);
-            if (confirmacion) {
-                cliente.isActive = !cliente.isActive; // Cambia el estado de activo a inactivo y viceversa.
-                localStorage.setItem('clientes', JSON.stringify(clientes));
-                alert(cliente.isActive ? 'Cliente activado.' : 'Cliente bloqueado.');
-                actualizarEstadoVisual(cliente.isActive); // Actualiza la interfaz para reflejar el cambio de estado.
+        </form>
+    </div>
+    <script>
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();  // Previene que el formulario se envíe
+                buscarYEditarCliente();  // Llama a la función que ejecuta la búsqueda
             }
-        } else {
-            alert('Cliente no encontrado con el número y tipo de documento especificados.');
         }
-    }
+    </script>
 
-    function actualizarEstadoVisual(isActive) {
-        var estadoVisual = document.getElementById('estadoCliente'); // Asume que tienes un elemento para mostrar el estado
-        if (estadoVisual) {
-            estadoVisual.value = isActive ? 'Activo' : 'Inactivo'; // Cambia el valor mostrado en la interfaz
-        }
-    }
+    <script>
+        function buscarYEditarCliente() {
+            var tipoDocumento = document.getElementById('tipoDocumento').value;
+            var numeroDocumento = document.getElementById('buscarCedula').value.trim();
 
-</script>
+            if (!numeroDocumento) {
+                alert("Por favor, ingrese el número de documento.");
+                return;
+            }
 
-
-<script>
-    function eliminarCliente() {
-        var numeroDocumento = document.getElementById('buscarCedula').value; // Asegúrate de que este es el campo correcto para el número de documento.
-        var tipoDocumento = document.getElementById('tipoDocumento').value; // Asegúrate de que este es el campo correcto para el tipo de documento.
-        
-        if (!numeroDocumento || !tipoDocumento) {
-            alert("Por favor ingrese el tipo y número de documento del cliente que desea eliminar.");
-            return;
-        }
-
-        var confirmacion = confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
-        if (confirmacion) {
             var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
-            var encontrado = false;
+            var cliente = clientes.find(cliente => cliente.tipoDocumento === tipoDocumento && cliente.numeroDocumento === numeroDocumento);
 
-            var historial = JSON.parse(localStorage.getItem('historial_clientes')) || [];
+            if (cliente) {
+                document.getElementById('nombreCliente').value = cliente.nombre;
+                document.getElementById('apellidoCliente').value = cliente.apellido;
+                document.getElementById('cedulaCliente').value = cliente.numeroDocumento; // Asegúrate de que 'cedulaCliente' ahora maneje 'numeroDocumento'
+                document.getElementById('telefonoCliente').value = cliente.telefono;
+                document.getElementById('direccionCliente').value = cliente.direccion;
+                document.getElementById('emailCliente').value = cliente.email;
+                document.getElementById('estadoCliente').value = cliente.isActive ? "Activo" : "Inactivo";
+                document.getElementById('datosCliente').style.display = 'block';
+            } else {
+                alert('Cliente no encontrado');
+                document.getElementById('buscarCedula').value = '';
+            }
+        }
 
-            clientes = clientes.map(cliente => {
-                if (cliente.numeroDocumento === numeroDocumento && cliente.tipoDocumento === tipoDocumento && !cliente.isDeleted) {
-                    encontrado = true;
-                    historial.push({ ...cliente, fecha_eliminacion: new Date().toISOString() });
-                    return { ...cliente, isDeleted: true }; // Marcar como eliminado en lugar de eliminar completamente
-                }
-                return cliente;
-            });
 
-            if (encontrado) {
+
+        function guardarCambios(event) {
+            event.preventDefault();
+
+            var tipoDocumento = document.getElementById('tipoDocumento').value;
+            var numeroDocumento = document.getElementById('buscarCedula').value;
+            var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+            var cliente = clientes.find(cliente => cliente.tipoDocumento === tipoDocumento && cliente.numeroDocumento === numeroDocumento);
+
+            if (cliente) {
+                cliente.nombre = document.getElementById('nombreCliente').value;
+                cliente.apellido = document.getElementById('apellidoCliente').value;
+                cliente.telefono = document.getElementById('telefonoCliente').value;
+                cliente.direccion = document.getElementById('direccionCliente').value;
+                cliente.email = document.getElementById('emailCliente').value;
+
                 localStorage.setItem('clientes', JSON.stringify(clientes));
-                localStorage.setItem('historial_clientes', JSON.stringify(historial));
-                alert('Cliente eliminado.');
+                alert('Cambios guardados correctamente');
                 limpiarformulario();
                 document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
             } else {
-                alert('No se encontró un cliente activo con ese tipo y número de documento.');
+                alert('Error al guardar los cambios');
             }
         }
-    }
-</script>
+
+
+    </script>
+    <script>
+        function limpiarformulario() {
+            document.getElementById('nombreCliente').value = '';
+            document.getElementById('apellidoCliente').value = '';
+            document.getElementById('cedulaCliente').value = ''; // Este campo podría cambiar de nombre si decides usar "numeroDocumento"
+            document.getElementById('telefonoCliente').value = '';
+            document.getElementById('direccionCliente').value = '';
+            document.getElementById('emailCliente').value = '';
+            document.getElementById('tipoDocumento').value = 'CC'; // Restablece a 'Cédula de Ciudadanía' como predeterminado, ajusta según necesidad
+        }
+    </script>
+
+    <script>
+        function toggleEstadoCliente() {
+            var numeroDocumento = document.getElementById('buscarCedula').value; // Asegúrate de que este campo obtiene el número de documento correctamente.
+            var tipoDocumento = document.getElementById('tipoDocumento').value; // Asegúrate de que este campo obtiene el tipo de documento correctamente.
+            if (!numeroDocumento || !tipoDocumento) {
+                alert('Por favor, ingrese el número y tipo de documento para buscar el cliente.');
+                return;
+            }
+
+            var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+            var cliente = clientes.find(cliente => cliente.numeroDocumento === numeroDocumento && cliente.tipoDocumento === tipoDocumento);
+
+            if (cliente) {
+                var confirmacion = confirm(`Está a punto de ${cliente.isActive ? 'bloquear' : 'activar'} al cliente. ¿Desea continuar?`);
+                if (confirmacion) {
+                    cliente.isActive = !cliente.isActive; // Cambia el estado de activo a inactivo y viceversa.
+                    localStorage.setItem('clientes', JSON.stringify(clientes));
+                    alert(cliente.isActive ? 'Cliente activado.' : 'Cliente bloqueado.');
+                    actualizarEstadoVisual(cliente.isActive); // Actualiza la interfaz para reflejar el cambio de estado.
+                }
+            } else {
+                alert('Cliente no encontrado con el número y tipo de documento especificados.');
+            }
+        }
+
+        function actualizarEstadoVisual(isActive) {
+            var estadoVisual = document.getElementById('estadoCliente'); // Asume que tienes un elemento para mostrar el estado
+            if (estadoVisual) {
+                estadoVisual.value = isActive ? 'Activo' : 'Inactivo'; // Cambia el valor mostrado en la interfaz
+            }
+        }
+
+    </script>
+
+
+    <script>
+        function eliminarCliente() {
+            var numeroDocumento = document.getElementById('buscarCedula').value; // Asegúrate de que este es el campo correcto para el número de documento.
+            var tipoDocumento = document.getElementById('tipoDocumento').value; // Asegúrate de que este es el campo correcto para el tipo de documento.
+        
+            if (!numeroDocumento || !tipoDocumento) {
+                alert("Por favor ingrese el tipo y número de documento del cliente que desea eliminar.");
+                return;
+            }
+
+            var confirmacion = confirm("¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.");
+            if (confirmacion) {
+                var clientes = JSON.parse(localStorage.getItem('clientes')) || [];
+                var encontrado = false;
+
+                var historial = JSON.parse(localStorage.getItem('historial_clientes')) || [];
+
+                clientes = clientes.map(cliente => {
+                    if (cliente.numeroDocumento === numeroDocumento && cliente.tipoDocumento === tipoDocumento && !cliente.isDeleted) {
+                        encontrado = true;
+                        historial.push({ ...cliente, fecha_eliminacion: new Date().toISOString() });
+                        return { ...cliente, isDeleted: true }; // Marcar como eliminado en lugar de eliminar completamente
+                    }
+                    return cliente;
+                });
+
+                if (encontrado) {
+                    localStorage.setItem('clientes', JSON.stringify(clientes));
+                    localStorage.setItem('historial_clientes', JSON.stringify(historial));
+                    alert('Cliente eliminado.');
+                    limpiarformulario();
+                    document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
+                } else {
+                    alert('No se encontró un cliente activo con ese tipo y número de documento.');
+                }
+            }
+        }
+    </script>
 {% endblock%}
     
     

@@ -1,130 +1,128 @@
 {% extends 'layout.html' %}
 {% block title %} crear_producto{%endblock %}
 {% block content %}
-<div class="container mt-5">
-    <h2>Registrar Producto</h2>
-    <form id="formCrearProducto" onsubmit="guardarProducto(event)">
-        <div class="mb-3">
-            <label for="codigoProducto" class="form-label">Código</label>
-            <input type="text" class="form-control form-control-sm" id="codigoProducto" required>
-        </div>
-        <div class="mb-3">
-            <label for="nombreProducto" class="form-label">Nombre</label>
-            <input type="text" class="form-control form-control-sm" id="nombreProducto" required>
-        </div>
-        <div class="mb-3">
-            <label for="descripcionProducto" class="form-label">Descripción</label>
-            <textarea class="form-control form-control-sm" id="descripcionProducto" rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="categoriaProducto" class="form-label">Categoría</label>
-            <select class="form-select form-control-sm" id="categoriaProducto" required>
-                <option value="">Seleccione una categoría</option>
-                <option value="Abarrotes">Abarrotes</option>
-                <option value="Productos Frescos">Productos Frescos</option>
-                <option value="Carnes y Aves">Carnes y Aves</option>
-                <option value="Pescados y Mariscos">Pescados y Mariscos</option>
-                <option value="Lácteos y Huevos">Lácteos y Huevos</option>
-                <option value="Panadería y Pastelería">Panadería y Pastelería</option>
-                <option value="Bebidas">Bebidas</option>
-                <option value="Congelados">Congelados</option>
-                <option value="Snacks y Golosinas">Snacks y Golosinas</option>
-                <option value="Productos de Despensa">Productos de Despensa</option>
-                <option value="Productos para Bebés">Productos para Bebés</option>
-                <option value="Salud y Belleza">Salud y Belleza</option>
-                <option value="Limpieza y Hogar">Limpieza y Hogar</option>
-                <option value="Mascotas">Mascotas</option>
-            </select>
-        </div>
+    <div class="container mt-5">
+        <h2>Registrar Producto</h2>
+        <form id="formCrearProducto" onsubmit="guardarProducto(event)">
+            <div class="mb-3">
+                <label for="codigoProducto" class="form-label">Código</label>
+                <input type="text" class="form-control form-control-sm" id="codigoProducto" required>
+            </div>
+            <div class="mb-3">
+                <label for="nombreProducto" class="form-label">Nombre</label>
+                <input type="text" class="form-control form-control-sm" id="nombreProducto" required>
+            </div>
+            <div class="mb-3">
+                <label for="descripcionProducto" class="form-label">Descripción</label>
+                <textarea class="form-control form-control-sm" id="descripcionProducto" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="categoriaProducto" class="form-label">Categoría</label>
+                <select class="form-select form-control-sm" id="categoriaProducto" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="Abarrotes">Abarrotes</option>
+                    <option value="Productos Frescos">Productos Frescos</option>
+                    <option value="Carnes y Aves">Carnes y Aves</option>
+                    <option value="Pescados y Mariscos">Pescados y Mariscos</option>
+                    <option value="Lácteos y Huevos">Lácteos y Huevos</option>
+                    <option value="Panadería y Pastelería">Panadería y Pastelería</option>
+                    <option value="Bebidas">Bebidas</option>
+                    <option value="Congelados">Congelados</option>
+                    <option value="Snacks y Golosinas">Snacks y Golosinas</option>
+                    <option value="Productos de Despensa">Productos de Despensa</option>
+                    <option value="Productos para Bebés">Productos para Bebés</option>
+                    <option value="Salud y Belleza">Salud y Belleza</option>
+                    <option value="Limpieza y Hogar">Limpieza y Hogar</option>
+                    <option value="Mascotas">Mascotas</option>
+                </select>
+            </div>
         
-        <div class="mb-3">
-            <label for="precioProducto" class="form-label">Precio</label>
-            <input type="number" class="form-control form-control-sm" id="precioProducto" required step="0.01">
-        </div>
-        <div class="mb-3">
-            <label for="unidadMedidaProducto" class="form-label">Unidad de Medida</label>
-            <select class="form-select form-control-sm" id="unidadMedidaProducto" required>
-                <option value="">Seleccione una unidad</option>
-                <optgroup label="Peso">
-                    <option value="kg">Kilogramos (kg)</option>
-                    <option value="g">Gramos (g)</option>
-                    <option value="mg">Miligramos (mg)</option>
-                </optgroup>
-                <optgroup label="Volumen">
-                    <option value="lt">Litros (lt)</option>
-                    <option value="ml">Mililitros (ml)</option> <!-- Confirma que esta opción está correctamente escrita y seleccionable -->
-                    <option value="m3">Metros cúbicos (m³)</option>
-                </optgroup>
-                <optgroup label="Longitud">
-                    <option value="m">Metros (m)</option>
-                    <option value="cm">Centímetros (cm)</option>
-                    <option value="mm">Milímetros (mm)</option>
-                </optgroup>
-                <optgroup label="Unidades">
-                    <option value="un">Unidades (un)</option>
-                    <option value="paq">Paquetes (paq)</option>
-                </optgroup>
-            </select>
-            
-            
-        </div>
-        <div class="mb-3">
-            <label for="presentacionProducto" class="form-label">Presentación</label>
-            <input type="text" class="form-control form-control-sm" id="presentacionProducto" required>
-        </div>
-        <div class="mb-3">
-            <label for="cantidadStockProducto" class="form-label">Cantidad en Stock</label>
-            <input type="number" class="form-control form-control-sm" id="cantidadStockProducto" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar Producto</button>
-    </form>
-</div>
+            <div class="mb-3">
+                <label for="precioProducto" class="form-label">Precio</label>
+                <input type="number" class="form-control form-control-sm" id="precioProducto" required step="0.01">
+            </div>
+            <div class="mb-3">
+                <label for="unidadMedidaProducto" class="form-label">Unidad de Medida</label>
+                <select class="form-select form-control-sm" id="unidadMedidaProducto" required>
+                    <option value="">Seleccione una unidad</option>
+                    <optgroup label="Peso">
+                        <option value="kg">Kilogramos (kg)</option>
+                        <option value="g">Gramos (g)</option>
+                        <option value="mg">Miligramos (mg)</option>
+                    </optgroup>
+                    <optgroup label="Volumen">
+                        <option value="lt">Litros (lt)</option>
+                        <option value="ml">Mililitros (ml)</option> <!-- Confirma que esta opción está correctamente escrita y seleccionable -->
+                        <option value="m3">Metros cúbicos (m³)</option>
+                    </optgroup>
+                    <optgroup label="Longitud">
+                        <option value="m">Metros (m)</option>
+                        <option value="cm">Centímetros (cm)</option>
+                        <option value="mm">Milímetros (mm)</option>
+                    </optgroup>
+                    <optgroup label="Unidades">
+                        <option value="un">Unidades (un)</option>
+                        <option value="paq">Paquetes (paq)</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="presentacionProducto" class="form-label">Presentación</label>
+                <input type="text" class="form-control form-control-sm" id="presentacionProducto" required>
+            </div>
+            <div class="mb-3">
+                <label for="cantidadStockProducto" class="form-label">Cantidad en Stock</label>
+                <input type="number" class="form-control form-control-sm" id="cantidadStockProducto" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+        </form>
+    </div>
  
-<script>
-    function guardarProducto(event) {
-        event.preventDefault(); // Previene el envío automático del formulario
+    <script>
+        function guardarProducto(event) {
+            event.preventDefault(); // Previene el envío automático del formulario
 
-        var codigo = document.getElementById('codigoProducto').value.trim();
-        var nombre = document.getElementById('nombreProducto').value.trim();
-        var descripcion = document.getElementById('descripcionProducto').value.trim();
-        var categoria = document.getElementById('categoriaProducto').value.trim();
-        var precio = parseFloat(document.getElementById('precioProducto').value);
-        var unidadMedida = document.getElementById('unidadMedidaProducto').value;
-        var presentacion = document.getElementById('presentacionProducto').value.trim();
-        var cantidadStock = parseInt(document.getElementById('cantidadStockProducto').value);
-        var isActive = true;
+            var codigo = document.getElementById('codigoProducto').value.trim();
+            var nombre = document.getElementById('nombreProducto').value.trim();
+            var descripcion = document.getElementById('descripcionProducto').value.trim();
+            var categoria = document.getElementById('categoriaProducto').value.trim();
+            var precio = parseFloat(document.getElementById('precioProducto').value);
+            var unidadMedida = document.getElementById('unidadMedidaProducto').value;
+            var presentacion = document.getElementById('presentacionProducto').value.trim();
+            var cantidadStock = parseInt(document.getElementById('cantidadStockProducto').value);
+            var isActive = true;
 
-        if (!codigo || !nombre || !descripcion || !categoria || isNaN(precio) || !unidadMedida || !presentacion || isNaN(cantidadStock)) {
-            alert("Por favor complete todos los campos correctamente.");
-            return;
+            if (!codigo || !nombre || !descripcion || !categoria || isNaN(precio) || !unidadMedida || !presentacion || isNaN(cantidadStock)) {
+                alert("Por favor complete todos los campos correctamente.");
+                return;
+            }
+
+            var productos = JSON.parse(localStorage.getItem('Productos')) || [];
+
+            if (productos.some(producto => producto.codigo === codigo)) {
+                alert("Un producto con este código ya existe.");
+                return;
+            }
+
+            var producto = {
+                codigo: codigo,
+                nombre: nombre,
+                descripcion: descripcion,
+                categoria: categoria,
+                precio: precio,
+                unidadMedida: unidadMedida,
+                presentacion: presentacion,
+                cantidadStock: cantidadStock,
+                isActive: isActive,
+                isDeleted: false  // Nuevo campo para la eliminación lógica
+            };
+
+            productos.push(producto);
+            localStorage.setItem('Productos', JSON.stringify(productos));
+            alert("Producto guardado con éxito!");
+            document.getElementById('formCrearProducto').reset(); // Limpiar el formulario después de guardar
         }
-
-        var productos = JSON.parse(localStorage.getItem('Productos')) || [];
-
-        if (productos.some(producto => producto.codigo === codigo)) {
-            alert("Un producto con este código ya existe.");
-            return;
-        }
-
-        var producto = {
-            codigo: codigo,
-            nombre: nombre,
-            descripcion: descripcion,
-            categoria: categoria,
-            precio: precio,
-            unidadMedida: unidadMedida,
-            presentacion: presentacion,
-            cantidadStock: cantidadStock,
-            isActive: isActive,
-            isDeleted: false  // Nuevo campo para la eliminación lógica
-        };
-
-        productos.push(producto);
-        localStorage.setItem('Productos', JSON.stringify(productos));
-        alert("Producto guardado con éxito!");
-        document.getElementById('formCrearProducto').reset(); // Limpiar el formulario después de guardar
-    }
-</script>
+    </script>
 {% endblock%}
     
     
