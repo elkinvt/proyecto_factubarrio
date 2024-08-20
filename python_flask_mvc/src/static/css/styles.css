@@ -1,3 +1,4 @@
+/* Estilos generales que se aplican a todas las páginas */
 body {
     background-image: url('../LOGO.png');
     background-size: cover;
@@ -40,7 +41,7 @@ footer {
 
 .form-control-sm {
     width: 100%;
-    max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+    max-width: 300px;
 }
 
 .container {
@@ -57,48 +58,52 @@ footer {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.bienvenido {
-    font-size: 100px; /* Tamaño grande para pantallas grandes */
-    font-weight: bold;
-    text-align: center;
-    margin-top: 310px; /* Margen para centrar en pantallas grandes */
-}
-
-/* Ajustes para tablets */
-@media (max-width: 768px) {
-    .bienvenido {
-        font-size: 50px; /* Tamaño de fuente más pequeño */
-        margin-top: 150px; /* Menor margen superior */
-    }
-}
-
-/* Ajustes para teléfonos móviles */
-@media (max-width: 480px) {
-    .bienvenido {
-        font-size: 30px; /* Tamaño de fuente aún más pequeño */
-        margin-top: 50px; /* Menor margen superior */
-    }
-}
-
 .factubarrio {
-    font-size: 100px; /* Tamaño grande para pantallas grandes */
+    font-size: 100px;
     font-weight: bold;
     text-align: center;
-    margin-top: -20px; /* Margen negativo para ajustar la posición */
+    margin-top: -20px;
 }
 
 /* Ajustes para tablets */
 @media (max-width: 768px) {
     .factubarrio {
-        font-size: 50px; /* Tamaño de fuente más pequeño */
-        margin-top: 10px; /* Ajustar el margen para pantallas más pequeñas */
+        font-size: 50px;
+        margin-top: 10px;
     }
 }
 
 /* Ajustes para teléfonos móviles */
 @media (max-width: 480px) {
     .factubarrio {
-        font-size: 30px; /* Tamaño de fuente aún más pequeño */
-        margin-top: 20px; /* Aumentar el margen para centrar mejor el texto */
+        font-size: 30px;
+        margin-top: 20px;
+    }
+}
+
+/* Estilos específicos para la página de inicio de sesión (index) */
+.login-page .factubarrio {
+    margin-top: -20px; /* Esto ya está en los estilos generales */
+}
+
+/* Estilos específicos para la página principal */
+.main-page .bienvenido {
+    font-size: 100px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 310px;
+}
+
+@media (max-width: 768px) {
+    .main-page .bienvenido {
+        font-size: 50px;
+        margin-top: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-page .bienvenido {
+        font-size: 30px;
+        margin-top: 50px;
     }
 }
