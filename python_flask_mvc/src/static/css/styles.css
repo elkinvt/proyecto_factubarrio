@@ -38,6 +38,11 @@ footer {
     width: auto;
 }
 
+.form-control-sm {
+    width: 100%;
+    max-width: 300px; /* Puedes ajustar el tamaño máximo según tus necesidades */
+}
+
 .container {
     display: flex;
     flex-direction: column;
