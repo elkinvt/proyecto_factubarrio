@@ -83,7 +83,8 @@ footer {
 
 /* Estilos específicos para la página de inicio de sesión (index) */
 .login-page .factubarrio {
-    margin-top: -20px; /* Esto ya está en los estilos generales */
+    margin-top: -20px;
+    /* Esto ya está en los estilos generales */
 }
 
 /* Estilos específicos para la página principal */

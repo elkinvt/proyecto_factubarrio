@@ -1,63 +1,60 @@
 {% extends 'layout.html' %}
 {% block title %} pagina_principal{%endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <h2>Buscar producto por Código o Nombre</h2>
-        <input type="text" id="buscarProductoInput" placeholder="Ingrese código o nombre del producto" class="form-control mt-2 form-control-sm" onkeypress="handleKeyPress(event)">
-        <button type="button" class="btn btn-primary mt-3" onclick="buscarProducto()">Buscar</button>
-        <div id="listaProductos" class="list-group mt-3"></div>
-    </div>
+<div class="container mt-5">
+    <h2>Buscar producto por Código o Nombre</h2>
+    <input type="text" id="buscarProductoInput" placeholder="Ingrese código o nombre del producto"
+        class="form-control mt-2 form-control-sm" onkeypress="handleKeyPress(event)">
+    <button type="button" class="btn btn-primary mt-3" onclick="buscarProducto()">Buscar</button>
+    <div id="listaProductos" class="list-group mt-3"></div>
+</div>
 
-    <div  id="infoProducto" class="container mt-5">
-        <h2>Informacion del producto</h2>
-        <form id="formCrearProducto">
-            <div class="mb-3">
-                <label for="codigoProducto" class="form-label">Código</label>
-                <input type="text" class="form-control form-control-sm" id="codigoProducto" required readonly>
-            </div>
-            <div class="mb3">
-                <label for="nombreProducto" class="form-label">Nombre</label>
-                <input type="text" class="form-control form-control-sm" id="nombreProducto" required readonly>
-            </div>
-            <div class="mb-3">
-                <label for="descripcionProducto" class="form-label">Descripción</label>
-                <textarea class="form-control form-control-sm" id="descripcionProducto" rows="3" required readonly></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="categoriaProducto" class="form-label">Categoría</label>
-                <input type="text" class="form-control form-control-sm" id="categoriaProducto" required readonly>
-            </div>
-            <div class="mb-3">
-                <label for="precioProducto" class="form-label">Precio</label>
-                <input type="number" class="form-control form-control-sm" id="precioProducto" required readonly>
-            </div>
-            <div class="mb-3">
-                <label for="unidadMedidaProducto" class="form-label">Unidad de Medida</label>
-                <input type="text" class="form-control form-control-sm" id="unidadMedidaProducto" required readonly>
-            </div>
-            
-            <div class="mb-3">
-                <label for="presentacionProducto" class="form-label">Presentación</label>
-                <input type="text" class="form-control form-control-sm" id="presentacionProducto" required readonly>
-            </div>
-            <div class="mb-3">
-                <label for="cantidadStockProducto" class="form-label">Cantidad en Stock</label>
-                <input type="number" class="form-control form-control-sm" id="cantidadStockProducto" required readonly>
-            </div>
-            <div class="mb-3">
-                <label for="estadoProducto" class="form-label">Estado</label>
-                <input type="text" class="form-control form-control-sm" id="estadoProducto" required readonly>
-            </div>
+<div id="infoProducto" class="container mt-5">
+    <h2>Informacion del producto</h2>
+    <form id="formCrearProducto">
+        <div class="mb-3">
+            <label for="codigoProducto" class="form-label">Código</label>
+            <input type="text" class="form-control form-control-sm" id="codigoProducto" required readonly>
+        </div>
+        <div class="mb3">
+            <label for="nombreProducto" class="form-label">Nombre</label>
+            <input type="text" class="form-control form-control-sm" id="nombreProducto" required readonly>
+        </div>
+        <div class="mb-3">
+            <label for="descripcionProducto" class="form-label">Descripción</label>
+            <textarea class="form-control form-control-sm" id="descripcionProducto" rows="3" required
+                readonly></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="categoriaProducto" class="form-label">Categoría</label>
+            <input type="text" class="form-control form-control-sm" id="categoriaProducto" required readonly>
+        </div>
+        <div class="mb-3">
+            <label for="precioProducto" class="form-label">Precio</label>
+            <input type="number" class="form-control form-control-sm" id="precioProducto" required readonly>
+        </div>
+        <div class="mb-3">
+            <label for="unidadMedidaProducto" class="form-label">Unidad de Medida</label>
+            <input type="text" class="form-control form-control-sm" id="unidadMedidaProducto" required readonly>
+        </div>
 
-        </form>
+        <div class="mb-3">
+            <label for="presentacionProducto" class="form-label">Presentación</label>
+            <input type="text" class="form-control form-control-sm" id="presentacionProducto" required readonly>
+        </div>
+        <div class="mb-3">
+            <label for="cantidadStockProducto" class="form-label">Cantidad en Stock</label>
+            <input type="number" class="form-control form-control-sm" id="cantidadStockProducto" required readonly>
+        </div>
+        <div class="mb-3">
+            <label for="estadoProducto" class="form-label">Estado</label>
+            <input type="text" class="form-control form-control-sm" id="estadoProducto" required readonly>
+        </div>
 
-    </div>
+    </form>
 
-    <script src="{{ url_for('static', filename='js/Productos/ver_producto.js') }}"></script>
-    
+</div>
+
+<script src="{{ url_for('static', filename='js/Productos/ver_producto.js') }}"></script>
+
 {% endblock%}
-  
-    
- 
-    
-    

@@ -2,7 +2,7 @@
 {% block title %} generar_factura{%endblock %}
 {% block content %}
 
-    <div class="container mt-5">
+<div class="container mt-5">
     <h2>Generar Factura</h2>
     <form id="formFactura">
         <div class="container mt-5">
@@ -17,7 +17,8 @@
                 <option value="NIT">NIT</option>
             </select>
             <label for="numeroDocumento" class="form-label">Número de Documento:</label>
-            <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm" id="numeroDocumento" onkeypress="handleKeyPress(event)">
+            <input type="text" placeholder="Ingrese número del documento para mostrar"
+                class="form-control form-control-sm" id="numeroDocumento" onkeypress="handleKeyPress(event)">
             <button onclick="buscarCliente()" class="btn btn-primary mt-2">Buscar</button>
         </div>
         <div class="mb-3">
@@ -34,20 +35,23 @@
         <div class="mb-3">
             <input type="hidden" id="productoFacturaCodigo" value=""> <!-- Campo oculto para el código del producto -->
             <label for="producto" class="form-label">producto</label>
-            <input type="text" id="productoFactura" placeholder="Escribe el nombre del producto" class="form-control form-control-sm">
+            <input type="text" id="productoFactura" placeholder="Escribe el nombre del producto"
+                class="form-control form-control-sm">
             <div id="listaSugerenciasProducto" class="list-group" style="position: absolute; z-index: 1000;"></div>
         </div>
         <div class="mb-3">
             <label for="cantidadFactura" class="form-label">Cantidad</label>
-            <input type="number" placeholder="Escribe la cantidad del producto" class="form-control form-control-sm" id="cantidadFactura" required onkeypress="handleEnterPress(event)">
+            <input type="number" placeholder="Escribe la cantidad del producto" class="form-control form-control-sm"
+                id="cantidadFactura" required onkeypress="handleEnterPress(event)">
         </div>
-        <button type="button" class="btn btn-primary form-control-sm" onclick="agregarProductoAFactura()">Agregar a Factura</button>
+        <button type="button" class="btn btn-primary form-control-sm" onclick="agregarProductoAFactura()">Agregar a
+            Factura</button>
     </form>
     <div id="detallesFactura" class="mt-4">
         <!-- Aquí se mostrarán los detalles de la factura -->
     </div>
-    </div>
-    <div id="detallesFactura" class="container mb-3">
+</div>
+<div id="detallesFactura" class="container mb-3">
     <table class="table mt-5 form-control-sm">
         <thead>
             <tr>
@@ -68,14 +72,13 @@
             </tr>
         </tfoot>
     </table>
-    </div>
-    <div class="d-flex justify-content-center mb-3">
-    <button type="button" class="btn btn-success form-control-sm" onclick="pagarFactura()" style="margin-right: 20px;">Pagar Factura</button>
+</div>
+<div class="d-flex justify-content-center mb-3">
+    <button type="button" class="btn btn-success form-control-sm" onclick="pagarFactura()"
+        style="margin-right: 20px;">Pagar Factura</button>
     <button type="button" class="btn btn-danger form-control-sm" onclick="anularFactura()">Anular Factura</button>
-    </div>
+</div>
 
-    <script src="{{ url_for('static', filename='js/facturas/generar_factura.js') }}"></script>
+<script src="{{ url_for('static', filename='js/facturas/generar_factura.js') }}"></script>
 
 {% endblock%}
-     
-    

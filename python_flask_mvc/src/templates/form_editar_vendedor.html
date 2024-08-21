@@ -1,71 +1,71 @@
 {% extends 'layout.html' %}
 {% block title %} editar_vendedor{%endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <label for="tipoDocumentoBusqueda" class="form-label">Tipo de Documento:</label>
-        <select class="form-control form-control-sm" id="tipoDocumentoBusqueda">
-            <option value="">Seleccione tipo de documento</option>
-            <option value="CC">Cédula de Ciudadanía</option>
-            <option value="TI">Tarjeta de Identidad</option>
-            <option value="CE">Cédula de Extranjería</option>
-            <option value="PA">Pasaporte</option>
-            <option value="RC">Registro Civil</option>
-            <option value="NIT">NIT</option>
-        </select>
-        <label for="numeroDocumentoBusqueda" class="form-label">Número de Documento:</label>
-        <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm" id="numeroDocumentoBusqueda" onkeypress="handleKeyPress(event)">
-        <button onclick="buscarYEditarVendedor()" class="btn btn-primary mt-2">Buscar</button>
-    </div>
+<div class="container mt-5">
+    <label for="tipoDocumentoBusqueda" class="form-label">Tipo de Documento:</label>
+    <select class="form-control form-control-sm" id="tipoDocumentoBusqueda">
+        <option value="">Seleccione tipo de documento</option>
+        <option value="CC">Cédula de Ciudadanía</option>
+        <option value="TI">Tarjeta de Identidad</option>
+        <option value="CE">Cédula de Extranjería</option>
+        <option value="PA">Pasaporte</option>
+        <option value="RC">Registro Civil</option>
+        <option value="NIT">NIT</option>
+    </select>
+    <label for="numeroDocumentoBusqueda" class="form-label">Número de Documento:</label>
+    <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm"
+        id="numeroDocumentoBusqueda" onkeypress="handleKeyPress(event)">
+    <button onclick="buscarYEditarVendedor()" class="btn btn-primary mt-2">Buscar</button>
+</div>
 
 
-    <div id="datosVendedor" class="container mt-5 ">
-        <h2>Editar Vendedor</h2>
-        <form action="/update-Vendedor" method="post" onsubmit="guardarCambios(event)">
-            <div class="mb-3">
-                <label for="nombreVendedor" class="form-label">Nombre</label>
-                <input type="text" class="form-control form-control-sm" id="nombreVendedor" name="nombreVendedor" required>
-            </div>
-            <div class="mb-3">
-                <label for="apellidoVendedor" class="form-label">Apellidos</label>
-                <input type="text" class="form-control form-control-sm" id="apellidoVendedor" name="apellidoVendedor" required>
-            </div>
-            <div class="mb-3">
-                <label for="cedulaVendedor" class="form-label">numero documentos</label>
-                <input type="text" class="form-control form-control-sm" id="cedulaVendedor" name="cedulaVendedor" readonly>
-            </div>
-            <div class="mb-3">
-                <label for="telefonoVendedor" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control form-control-sm" id="telefonoVendedor" name="telefonoVendedor">
-            </div>
-            <div class="mb-3">
-                <label for="direccionVendedor" class="form-label">Dirección</label>
-                <input type="text" class="form-control form-control-sm" id="direccionVendedor" name="direccionVendedor" required>
-            </div>
-            <div class="mb-3">
-                <label for="emailVendedor" class="form-label">Email</label>
-                <input type="email" class="form-control form-control-sm" id="emailVendedor" name="emailVendedor" required>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary form-control-sm">Guardar Cambios</button>
-            </div>
-        </form>
-            
-        <form>
-            <div class="container mt-5">
-                <h2>Detalles del Vendedor</h2>
-                <div id="vendedorDetalles" class="hidden">
-                    <!-- Campos existentes... -->
-                </div>
-                <!-- Botones para controlar el estado del Vendedor -->
-                <button type="button" class="btn btn-danger" onclick="eliminarVendedor()">Eliminar Vendedor</button>
-            </div>
-            
-        </form>
-    </div>
+<div id="datosVendedor" class="container mt-5 ">
+    <h2>Editar Vendedor</h2>
+    <form action="/update-Vendedor" method="post" onsubmit="guardarCambios(event)">
+        <div class="mb-3">
+            <label for="nombreVendedor" class="form-label">Nombre</label>
+            <input type="text" class="form-control form-control-sm" id="nombreVendedor" name="nombreVendedor" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellidoVendedor" class="form-label">Apellidos</label>
+            <input type="text" class="form-control form-control-sm" id="apellidoVendedor" name="apellidoVendedor"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="cedulaVendedor" class="form-label">numero documentos</label>
+            <input type="text" class="form-control form-control-sm" id="cedulaVendedor" name="cedulaVendedor" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="telefonoVendedor" class="form-label">Teléfono</label>
+            <input type="tel" class="form-control form-control-sm" id="telefonoVendedor" name="telefonoVendedor">
+        </div>
+        <div class="mb-3">
+            <label for="direccionVendedor" class="form-label">Dirección</label>
+            <input type="text" class="form-control form-control-sm" id="direccionVendedor" name="direccionVendedor"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="emailVendedor" class="form-label">Email</label>
+            <input type="email" class="form-control form-control-sm" id="emailVendedor" name="emailVendedor" required>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary form-control-sm">Guardar Cambios</button>
+        </div>
+    </form>
 
-    <script src="{{ url_for('static', filename='js/vendedores/editar_vendedor.js') }}"></script>
+    <form>
+        <div class="container mt-5">
+            <h2>Detalles del Vendedor</h2>
+            <div id="vendedorDetalles" class="hidden">
+                <!-- Campos existentes... -->
+            </div>
+            <!-- Botones para controlar el estado del Vendedor -->
+            <button type="button" class="btn btn-danger" onclick="eliminarVendedor()">Eliminar Vendedor</button>
+        </div>
+
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/vendedores/editar_vendedor.js') }}"></script>
 
 {% endblock%}
-    
-    
-    

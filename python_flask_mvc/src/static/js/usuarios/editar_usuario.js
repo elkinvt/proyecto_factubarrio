@@ -3,7 +3,7 @@ function cargarUsuarios() {
     const tableBody = document.getElementById('usuariosTable');
     tableBody.innerHTML = '';
     usuarios.forEach(user => {
-    const row = `<tr>
+        const row = `<tr>
         <td>${user.tipoDocumento} - ${user.numeroDocumento}</td>
         <td>${user.nombre}</td>
         <td>${user.username || 'No asignado'}</td>

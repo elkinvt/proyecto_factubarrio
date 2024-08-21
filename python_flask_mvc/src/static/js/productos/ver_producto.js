@@ -1,6 +1,6 @@
 function handleKeyPress(event) {
     if (event.key === "Enter") {
-         event.preventDefault();  // Previene que el formulario se envíe
+        event.preventDefault();  // Previene que el formulario se envíe
         buscarProducto();  // Llama a la función que ejecuta la búsqueda
     }
 }
@@ -9,10 +9,10 @@ function buscarProducto() {
     var textoBusqueda = document.getElementById('buscarProductoInput').value.trim().toLowerCase();
     document.getElementById('buscarProductoInput').value = '';
     var productos = JSON.parse(localStorage.getItem('Productos')) || [];
-    var productosFiltrados = productos.filter(producto => 
-    (producto.codigo.toLowerCase().includes(textoBusqueda) || 
-    producto.nombre.toLowerCase().includes(textoBusqueda)) &&
-    !producto.isDeleted);
+    var productosFiltrados = productos.filter(producto =>
+        (producto.codigo.toLowerCase().includes(textoBusqueda) ||
+            producto.nombre.toLowerCase().includes(textoBusqueda)) &&
+        !producto.isDeleted);
 
     var listaProductos = document.getElementById('listaProductos');
     listaProductos.innerHTML = '';
@@ -23,11 +23,11 @@ function buscarProducto() {
         listaProductos.style.visibility = 'visible';  // Asegura que el mensaje sea visible
     } else {
         productosFiltrados.forEach(producto => {
-        var item = document.createElement('button');
-        item.classList.add('list-group-item', 'list-group-item-action');
-        item.textContent = `${producto.nombre} - ${producto.codigo}`;
-        item.onclick = () => cargarProducto(producto);
-        listaProductos.appendChild(item);
+            var item = document.createElement('button');
+            item.classList.add('list-group-item', 'list-group-item-action');
+            item.textContent = `${producto.nombre} - ${producto.codigo}`;
+            item.onclick = () => cargarProducto(producto);
+            listaProductos.appendChild(item);
         });
         listaProductos.style.visibility = 'visible';  // Asegura que la lista sea visible
     }

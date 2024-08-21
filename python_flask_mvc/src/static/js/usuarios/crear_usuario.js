@@ -61,8 +61,8 @@ function limpiarFormulario(idFormulario) {
     var formulario = document.getElementById(idFormulario);
     var inputs = formulario.getElementsByTagName('input');
     for (var i = 0; i < inputs.length; i++) {
-    if (inputs[i].type === 'text' || inputs[i].type === 'password' || inputs[i].type === 'email') {
-        inputs[i].value = '';
+        if (inputs[i].type === 'text' || inputs[i].type === 'password' || inputs[i].type === 'email') {
+            inputs[i].value = '';
         }
     }
 }

@@ -1,49 +1,49 @@
 {% extends 'layout.html' %}
 {% block title %} crear_cliente{%endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <h2>Registrar Cliente</h2>
-        <form id="formCliente">
-            <div class="mb-3">
-                <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
-                <select class="form-control form-control-sm" id="tipoDocumento" name="tipoDocumento" required>
-                    <option value="">Seleccione tipo de documento</option>
-                    <option value="CC">Cédula de Ciudadanía</option>
-                    <option value="TI">Tarjeta de Identidad</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="PS">Pasaporte</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="numeroDocumento" class="form-label">Número de Documento</label>
-                <input type="text" class="form-control form-control-sm" id="numeroDocumento" name="numeroDocumento" required>
-            </div>
-            <div class="mb-3">
-                <label for="nombreCliente" class="form-label">Nombre</label>
-                <input type="text" class="form-control form-control-sm" id="nombreCliente" name="nombreCliente" required>
-            </div>
-            <div class="mb-3">
-                <label for="apellidoCliente" class="form-label">Apellidos</label>
-                <input type="text" class="form-control form-control-sm" id="apellidoCliente" name="apellidoCliente" required>
-            </div>
-            <div class="mb-3">
-                <label for="telefonoCliente" class="form-label">Teléfono</label>
-                <input type="tel" class="form-control form-control-sm" id="telefonoCliente" name="telefonoCliente" required>
-            </div>
-            <div class="mb-3">
-                <label for="direccionCliente" class="form-label">Dirección</label>
-                <input type="text" class="form-control form-control-sm" id="direccionCliente" name="direccionCliente" required>
-            </div>
-            <div class="mb-3">
-                <label for="emailCliente" class="form-label">Email</label>
-                <input type="email" class="form-control form-control-sm" id="emailCliente" name="emailCliente" required>
-            </div>
-            <button type="button" class="btn btn-primary form-control-sm" onclick="guardarCliente()">Guardar Cliente</button>
-        </form>
-    </div>
-    <script src="{{ url_for('static', filename='js/clientes/crear_cliente.js') }}"></script>   
+<div class="container mt-5">
+    <h2>Registrar Cliente</h2>
+    <form id="formCliente">
+        <div class="mb-3">
+            <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+            <select class="form-control form-control-sm" id="tipoDocumento" name="tipoDocumento" required>
+                <option value="">Seleccione tipo de documento</option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="TI">Tarjeta de Identidad</option>
+                <option value="CE">Cédula de Extranjería</option>
+                <option value="PS">Pasaporte</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="numeroDocumento" class="form-label">Número de Documento</label>
+            <input type="text" class="form-control form-control-sm" id="numeroDocumento" name="numeroDocumento"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="nombreCliente" class="form-label">Nombre</label>
+            <input type="text" class="form-control form-control-sm" id="nombreCliente" name="nombreCliente" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellidoCliente" class="form-label">Apellidos</label>
+            <input type="text" class="form-control form-control-sm" id="apellidoCliente" name="apellidoCliente"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="telefonoCliente" class="form-label">Teléfono</label>
+            <input type="tel" class="form-control form-control-sm" id="telefonoCliente" name="telefonoCliente" required>
+        </div>
+        <div class="mb-3">
+            <label for="direccionCliente" class="form-label">Dirección</label>
+            <input type="text" class="form-control form-control-sm" id="direccionCliente" name="direccionCliente"
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="emailCliente" class="form-label">Email</label>
+            <input type="email" class="form-control form-control-sm" id="emailCliente" name="emailCliente" required>
+        </div>
+        <button type="button" class="btn btn-primary form-control-sm" onclick="guardarCliente()">Guardar
+            Cliente</button>
+    </form>
+</div>
+<script src="{{ url_for('static', filename='js/clientes/crear_cliente.js') }}"></script>
 {% endblock%}
-    
-    
-    
-    

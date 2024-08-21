@@ -1,53 +1,52 @@
 {% extends 'layout.html' %}
 {% block title %} crear_usuario{%endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <h2>Crear Usuario de Vendedor</h2>
-        <form id="formCrearUsuario" onsubmit="guardarUsuario(event)">
-            <div class="mb-3">
-                <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
-                <select id="tipoDocumento" class="form-control form-control-sm mb-2" required>
-                    <option value="">Seleccione tipo de documento</option>
-                    <option value="CC">Cédula de Ciudadanía</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="TI">Tarjeta de Identidad</option>
-                    <option value="PAS">Pasaporte</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="cedulaVendedor" class="form-label">Número de Documento</label>
-                <input type="text" placeholder="Ingrese número de documento y presione enter"  class="form-control form-control-sm mb-2" id="cedulaVendedor" required onkeypress="cargarDatosVendedor(event, true)">
-                <button type="button" class="btn btn-primary form-control-sm" onclick="cargarDatosVendedor()">Buscar</button>
-            </div>
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control form-control-sm" id="nombre" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control form-control-sm" id="apellido" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control form-control-sm" id="email" disabled>
-            </div>
-            <div class="mb-3">
-                <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
-                <input type="text" class="form-control form-control-sm" id="nombreUsuario" required>
-            </div>
-            <div class="mb-3">
-                <label for="contrasenaUsuario" class="form-label">Contraseña</label>
-                <input type="password" class="form-control form-control-sm" id="contrasenaUsuario" required>
-            </div>
-            <button type="submit" class="btn btn-primary form-control-sm" onclick="guardarUsuario()">Guardar Usuario</button>
-        </form>
-    </div>
+<div class="container mt-5">
+    <h2>Crear Usuario de Vendedor</h2>
+    <form id="formCrearUsuario" onsubmit="guardarUsuario(event)">
+        <div class="mb-3">
+            <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+            <select id="tipoDocumento" class="form-control form-control-sm mb-2" required>
+                <option value="">Seleccione tipo de documento</option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="CE">Cédula de Extranjería</option>
+                <option value="TI">Tarjeta de Identidad</option>
+                <option value="PAS">Pasaporte</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="cedulaVendedor" class="form-label">Número de Documento</label>
+            <input type="text" placeholder="Ingrese número de documento y presione enter"
+                class="form-control form-control-sm mb-2" id="cedulaVendedor" required
+                onkeypress="cargarDatosVendedor(event, true)">
+            <button type="button" class="btn btn-primary form-control-sm"
+                onclick="cargarDatosVendedor()">Buscar</button>
+        </div>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control form-control-sm" id="nombre" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control form-control-sm" id="apellido" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control form-control-sm" id="email" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control form-control-sm" id="nombreUsuario" required>
+        </div>
+        <div class="mb-3">
+            <label for="contrasenaUsuario" class="form-label">Contraseña</label>
+            <input type="password" class="form-control form-control-sm" id="contrasenaUsuario" required>
+        </div>
+        <button type="submit" class="btn btn-primary form-control-sm" onclick="guardarUsuario()">Guardar
+            Usuario</button>
+    </form>
+</div>
 
-    <script src="{{ url_for('static', filename='js/usuarios/crear_usuario.js') }}"></script>
+<script src="{{ url_for('static', filename='js/usuarios/crear_usuario.js') }}"></script>
 
 {% endblock%}
-
-
-    
-
-    

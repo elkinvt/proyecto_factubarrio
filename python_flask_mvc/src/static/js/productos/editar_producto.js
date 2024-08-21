@@ -14,7 +14,7 @@ function buscarProducto() {
 
     var resultados = productos.filter(producto =>
         ((codigo && producto.codigo.toLowerCase().includes(codigo)) ||
-        (nombre && producto.nombre.toLowerCase().includes(nombre))) &&
+            (nombre && producto.nombre.toLowerCase().includes(nombre))) &&
         !producto.isDeleted // Solo incluye productos que no están eliminados
     );
 
@@ -24,7 +24,7 @@ function buscarProducto() {
     if (resultados.length === 0) {
         listaProductos.innerHTML = '<div class="list-group-item">No se encontraron productos.</div>';
     } else {
-            resultados.forEach(producto => {
+        resultados.forEach(producto => {
             var item = document.createElement('button');
             item.classList.add('list-group-item', 'list-group-item-action');
             item.textContent = `${producto.nombre} - ${producto.codigo}`;
@@ -58,7 +58,7 @@ function cargarProductoEnFormulario(producto) {
 
 function guardarProductoEditado(event) {
     event.preventDefault();
-    
+
     if (productoActual) {
         var productos = JSON.parse(localStorage.getItem('Productos')) || [];
         var index = productos.findIndex(p => p.codigo === productoActual.codigo);
@@ -109,7 +109,7 @@ function toggleEstadoProducto() {
 
 function actualizarEstadoVisual(isActive) {
     var checkbox = document.getElementById('clienteActivo');  // Asegúrate de que este ID exista o ajusta según tu HTML
-        if (checkbox) {
+    if (checkbox) {
         checkbox.checked = isActive;
     }
 }

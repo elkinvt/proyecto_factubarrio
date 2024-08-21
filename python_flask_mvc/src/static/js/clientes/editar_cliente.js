@@ -5,9 +5,9 @@ function handleKeyPress(event) {
         buscarYEditarCliente();  // Llama a la función que ejecuta la búsqueda
     }
 }
-    
 
-    
+
+
 function buscarYEditarCliente() {
     var tipoDocumento = document.getElementById('tipoDocumento').value;
     var numeroDocumento = document.getElementById('buscarCedula').value.trim();
@@ -29,10 +29,10 @@ function buscarYEditarCliente() {
         document.getElementById('emailCliente').value = cliente.email;
         document.getElementById('estadoCliente').value = cliente.isActive ? "Activo" : "Inactivo";
         document.getElementById('datosCliente').style.display = 'flex';
-        } else {
-            alert('Cliente no encontrado');
-            document.getElementById('buscarCedula').value = '';
-        }
+    } else {
+        alert('Cliente no encontrado');
+        document.getElementById('buscarCedula').value = '';
+    }
 }
 
 
@@ -56,7 +56,7 @@ function guardarCambios(event) {
         alert('Cambios guardados correctamente');
         limpiarformulario();
         document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
-        } else {
+    } else {
         alert('Error al guardar los cambios');
     }
 }
@@ -93,8 +93,8 @@ function toggleEstadoCliente() {
             localStorage.setItem('clientes', JSON.stringify(clientes));
             alert(cliente.isActive ? 'Cliente activado.' : 'Cliente bloqueado.');
             actualizarEstadoVisual(cliente.isActive); // Actualiza la interfaz para reflejar el cambio de estado.
-            }
-        } else {
+        }
+    } else {
         alert('Cliente no encontrado con el número y tipo de documento especificados.');
     }
 }
@@ -111,7 +111,7 @@ function actualizarEstadoVisual(isActive) {
 function eliminarCliente() {
     var numeroDocumento = document.getElementById('buscarCedula').value; // Asegúrate de que este es el campo correcto para el número de documento.
     var tipoDocumento = document.getElementById('tipoDocumento').value; // Asegúrate de que este es el campo correcto para el tipo de documento.
-        
+
     if (!numeroDocumento || !tipoDocumento) {
         alert("Por favor ingrese el tipo y número de documento del cliente que desea eliminar.");
         return;
@@ -125,10 +125,10 @@ function eliminarCliente() {
         var historial = JSON.parse(localStorage.getItem('historial_clientes')) || [];
 
         clientes = clientes.map(cliente => {
-        if (cliente.numeroDocumento === numeroDocumento && cliente.tipoDocumento === tipoDocumento && !cliente.isDeleted) {
-            encontrado = true;
-            historial.push({ ...cliente, fecha_eliminacion: new Date().toISOString() });
-            return { ...cliente, isDeleted: true }; // Marcar como eliminado en lugar de eliminar completamente
+            if (cliente.numeroDocumento === numeroDocumento && cliente.tipoDocumento === tipoDocumento && !cliente.isDeleted) {
+                encontrado = true;
+                historial.push({ ...cliente, fecha_eliminacion: new Date().toISOString() });
+                return { ...cliente, isDeleted: true }; // Marcar como eliminado en lugar de eliminar completamente
             }
             return cliente;
         });
@@ -139,7 +139,7 @@ function eliminarCliente() {
             alert('Cliente eliminado.');
             limpiarformulario();
             document.getElementById('buscarCedula').value = ''; // Limpiar campo de búsqueda
-            } else {
+        } else {
             alert('No se encontró un cliente activo con ese tipo y número de documento.');
         }
     }

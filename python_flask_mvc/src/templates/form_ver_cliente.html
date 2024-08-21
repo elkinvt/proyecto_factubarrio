@@ -1,61 +1,58 @@
 {% extends 'layout.html' %}
 {% block title %} ver_cliente{%endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
-        <select class="form-control form-control-sm" id="tipoDocumento">
-            <option value="">Seleccione tipo de documento</option>
-            <option value="CC">Cédula de Ciudadanía</option>
-            <option value="TI">Tarjeta de Identidad</option>
-            <option value="CE">Cédula de Extranjería</option>
-            <option value="PA">Pasaporte</option>
-            <option value="RC">Registro Civil</option>
-            <option value="NIT">NIT</option>
-        </select>
-        <label for="buscarCedula" class="form-label">Número de Documento:</label>
-        <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm" id="buscarCedula" onkeypress="handleKeyPress(event)">
-        <button onclick="buscarCliente()" class="btn btn-primary mt-2">Buscar</button>
-    </div>
+<div class="container mt-5">
+    <label for="tipoDocumento" class="form-label">Tipo de Documento:</label>
+    <select class="form-control form-control-sm" id="tipoDocumento">
+        <option value="">Seleccione tipo de documento</option>
+        <option value="CC">Cédula de Ciudadanía</option>
+        <option value="TI">Tarjeta de Identidad</option>
+        <option value="CE">Cédula de Extranjería</option>
+        <option value="PA">Pasaporte</option>
+        <option value="RC">Registro Civil</option>
+        <option value="NIT">NIT</option>
+    </select>
+    <label for="buscarCedula" class="form-label">Número de Documento:</label>
+    <input type="text" placeholder="Ingrese número del documento para mostrar" class="form-control form-control-sm"
+        id="buscarCedula" onkeypress="handleKeyPress(event)">
+    <button onclick="buscarCliente()" class="btn btn-primary mt-2">Buscar</button>
+</div>
 
 
-    <div class="container mt-5">
-        <h3>Información del Cliente</h3>
-        <form>
-            <div class="mb-3">
-                <label>Nombre</label>
-                <input type="text" class="form-control form-control-sm" id="clienteNombre">
-            </div>
-            <div class="mb-3">
-                <label>Apellidos</label>
-                <input type="text" class="form-control form-control-sm" id="clienteApellido">
-            </div>
-            <div class="mb-3">
-                <label>Numero documento</label>
-                <input type="text" class="form-control form-control-sm" id="clienteCedula">
-            </div>
-            <div class="mb-3">
-                <label>Teléfono</label>
-                <input type="text" class="form-control form-control-sm" id="clienteTelefono">
-            </div>
-            <div class="mb-3">
-                <label>Dirección</label>
-                <input type="text" class="form-control form-control-sm" id="clienteDireccion">
-            </div>
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" class="form-control form-control-sm" id="clienteEmail">
-            </div>
-            <div class="mb-3">
-                <label>Estado</label>
-                <input type="text" class="form-control form-control-sm" id="clienteEstado" readonly>
-            </div>
-                
-                
-        </form>
-    </div>
-    <script src="{{ url_for('static', filename='js/clientes/ver_cliente.js') }}"></script> 
+<div class="container mt-5">
+    <h3>Información del Cliente</h3>
+    <form>
+        <div class="mb-3">
+            <label>Nombre</label>
+            <input type="text" class="form-control form-control-sm" id="clienteNombre">
+        </div>
+        <div class="mb-3">
+            <label>Apellidos</label>
+            <input type="text" class="form-control form-control-sm" id="clienteApellido">
+        </div>
+        <div class="mb-3">
+            <label>Numero documento</label>
+            <input type="text" class="form-control form-control-sm" id="clienteCedula">
+        </div>
+        <div class="mb-3">
+            <label>Teléfono</label>
+            <input type="text" class="form-control form-control-sm" id="clienteTelefono">
+        </div>
+        <div class="mb-3">
+            <label>Dirección</label>
+            <input type="text" class="form-control form-control-sm" id="clienteDireccion">
+        </div>
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" class="form-control form-control-sm" id="clienteEmail">
+        </div>
+        <div class="mb-3">
+            <label>Estado</label>
+            <input type="text" class="form-control form-control-sm" id="clienteEstado" readonly>
+        </div>
+
+
+    </form>
+</div>
+<script src="{{ url_for('static', filename='js/clientes/ver_cliente.js') }}"></script>
 {% endblock%}
-    
-        
-        
-    

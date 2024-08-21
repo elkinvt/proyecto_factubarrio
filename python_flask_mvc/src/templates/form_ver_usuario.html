@@ -1,33 +1,28 @@
 {% extends 'layout.html' %}
 {% block title %} ver_usuario{%endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <h2>Usuarios Registrados</h2>
-        <div class="table-responsive"> 
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Documento</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Usuario</th>
-                    </tr>
-                </thead>
-                
-                <tbody id="usuariosTable">
-                    <!-- Los usuarios se cargarán aquí -->
-                </tbody>
-            </table>
-        </div>
+<div class="container mt-5">
+    <h2>Usuarios Registrados</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Usuario</th>
+                </tr>
+            </thead>
 
-    </div> 
+            <tbody id="usuariosTable">
+                <!-- Los usuarios se cargarán aquí -->
+            </tbody>
+        </table>
+    </div>
 
-    <script src="{{ url_for('static', filename='js/usuarios/ver_usuario.js') }}"></script>
+</div>
+
+<script src="{{ url_for('static', filename='js/usuarios/ver_usuario.js') }}"></script>
 
 {% endblock%}
-
-    
-    
-   
-   

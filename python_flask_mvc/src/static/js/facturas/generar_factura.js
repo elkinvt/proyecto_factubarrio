@@ -29,19 +29,19 @@ function buscarCliente() {
     try {
         let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
         let clienteEncontrado = clientes.find(cliente =>
-        cliente.tipoDocumento === tipoDocumento &&
-        cliente.numeroDocumento === numeroDocumento &&
-        !cliente.isDeleted && cliente.isActive
+            cliente.tipoDocumento === tipoDocumento &&
+            cliente.numeroDocumento === numeroDocumento &&
+            !cliente.isDeleted && cliente.isActive
         );
         if (clienteEncontrado) {
             document.getElementById('nombreCliente').value = clienteEncontrado.nombre;
         } else {
             alert('Cliente no encontrado con el tipo y número de documento especificados.');
             limpiarCamposCliente();
-            }
-        } catch (e) {
-            console.error("Error al acceder a los datos del cliente", e);
-            alert("Error al procesar los datos de los clientes.");
+        }
+    } catch (e) {
+        console.error("Error al acceder a los datos del cliente", e);
+        alert("Error al procesar los datos de los clientes.");
     }
 }
 
@@ -87,15 +87,15 @@ function actualizarSugerencias(texto, productos, listaSugerencias) {
 
 function mostrarSugerencias(productos, listaSugerencias) {
     productos.forEach(producto => {
-    const item = document.createElement('div');
-    item.className = 'list-group-item list-group-item-action';
-    item.textContent = `${producto.nombre} - Precio: ${producto.precio}`;
-    item.onclick = () => {
-        document.getElementById('productoFactura').value = producto.nombre;
-        document.getElementById('productoFacturaCodigo').value = producto.codigo;
-        limpiarElemento(listaSugerencias);
-    };
-    listaSugerencias.appendChild(item);
+        const item = document.createElement('div');
+        item.className = 'list-group-item list-group-item-action';
+        item.textContent = `${producto.nombre} - Precio: ${producto.precio}`;
+        item.onclick = () => {
+            document.getElementById('productoFactura').value = producto.nombre;
+            document.getElementById('productoFacturaCodigo').value = producto.codigo;
+            limpiarElemento(listaSugerencias);
+        };
+        listaSugerencias.appendChild(item);
     });
     listaSugerencias.style.display = 'block';
 }
@@ -146,7 +146,7 @@ function mostrarDetallesFactura() {
     facturaBody.innerHTML = '';
     var total = 0;
     factura.forEach((item, index) => {
-    let row = `<tr>
+        let row = `<tr>
         <td>${item.producto}</td>
         <td>${item.cantidad}</td>
         <td>$${item.precioUnitario}</td>
@@ -178,13 +178,13 @@ function validarProductosEnFactura() {
 
     // Suponemos que cada producto en la factura debe estar activo y no eliminado para ser válido
     let productosInvalidos = factura.some(item => {
-    let producto = JSON.parse(localStorage.getItem('Productos')).find(p => p.codigo === item.codigo);
-    return producto.isDeleted || !producto.isActive;
+        let producto = JSON.parse(localStorage.getItem('Productos')).find(p => p.codigo === item.codigo);
+        return producto.isDeleted || !producto.isActive;
     });
 
     if (productosInvalidos) {
-    alert("Algunos productos en la factura ya no están disponibles. Por favor, revisa tu selección.");
-    return false;
+        alert("Algunos productos en la factura ya no están disponibles. Por favor, revisa tu selección.");
+        return false;
     }
 
     return true;
@@ -214,7 +214,7 @@ function validarSeleccionDeVendedor() {
 
 var factura = [];  // Asegúrate de que la factura está globalmente disponible
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     cargarVendedores();  // Asegura que los vendedores estén cargados
 });
 
@@ -260,7 +260,7 @@ function guardarFactura(montoPago, totalFactura, cambio) {
     let ahora = new Date();
     let nuevaFactura = {
         id: 'F' + (facturas.length + 1).toString().padStart(3, '0'),
-        fecha: ahora.toLocaleDateString('es-CO', {year: 'numeric', month: '2-digit', day: '2-digit'}).split('/').reverse().join('-'), // Formato YYYY-MM-DD ajustado a la zona horaria local
+        fecha: ahora.toLocaleDateString('es-CO', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').reverse().join('-'), // Formato YYYY-MM-DD ajustado a la zona horaria local
         hora: ahora.getHours() + ":" + ahora.getMinutes().toString().padStart(2, '0'), // HH:mm
         cliente: document.getElementById('nombreCliente').value,
         vendedor: document.getElementById('vendedorFactura').value,
@@ -295,11 +295,11 @@ function devolverStock(productos) {
     // Recargar los productos para evitar conflictos de sobreescritura
     productos = JSON.parse(localStorage.getItem('Productos')) || [];
     factura.forEach(item => {
-    var producto = productos.find(p => p.codigo === item.codigo && !p.isDeleted && p.isActive);
-    if (producto) {
-        producto.cantidadStock += item.cantidad;
-    } else {
-        console.log("Producto no encontrado o inactivo: ", item.codigo);
+        var producto = productos.find(p => p.codigo === item.codigo && !p.isDeleted && p.isActive);
+        if (producto) {
+            producto.cantidadStock += item.cantidad;
+        } else {
+            console.log("Producto no encontrado o inactivo: ", item.codigo);
         }
     });
     localStorage.setItem('Productos', JSON.stringify(productos));

@@ -84,9 +84,9 @@ function eliminarVendedor() {
             alert('Vendedor marcado como eliminado, pero su historial de ventas ha sido archivado.');
             limpiarFormulario();
         }
-        } else {
-            alert('Vendedor no encontrado.');
-        }
+    } else {
+        alert('Vendedor no encontrado.');
+    }
 }
 
 function archivarVentasVendedor(nombreVendedor) {

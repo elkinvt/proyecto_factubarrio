@@ -1,7 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var emailInput = document.getElementById('emailCliente');
 
-    emailInput.addEventListener('keypress', function(event) {
+    emailInput.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault();  // Previene la acción por defecto de enviar el formulario
             guardarCliente();  // Llama a la función que maneja la lógica de guardar

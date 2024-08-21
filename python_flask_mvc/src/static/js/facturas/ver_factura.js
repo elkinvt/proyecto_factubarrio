@@ -9,7 +9,7 @@ function buscarFacturasPorFecha() {
 
     if (facturasFiltradas.length > 0) {
         facturasFiltradas.forEach(factura => {
-        contenedor.innerHTML += `
+            contenedor.innerHTML += `
             <tr>
             <td>${factura.id}</td>
             <td>${factura.fecha}</td>
@@ -59,6 +59,6 @@ function cargarFacturas() {
     let contenedor = document.getElementById('listaFacturas');
     contenedor.innerHTML = ''; // Limpia contenido anterior
     facturas.forEach((factura, index) => {
-    contenedor.innerHTML += `<div>Factura ${factura.id} - ${factura.fecha} - Total: $${factura.total}</div>`;
+        contenedor.innerHTML += `<div>Factura ${factura.id} - ${factura.fecha} - Total: $${factura.total}</div>`;
     });
 }
